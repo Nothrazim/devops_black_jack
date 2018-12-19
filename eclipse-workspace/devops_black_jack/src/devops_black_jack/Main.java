@@ -6,8 +6,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		System.out.println("Hello weldt!");	
 
-		System.out.println("FISK");
-		System.out.println("THIS IS A TEST");
+		Deck Decktest = new Deck();
+		Decktest.loop_cards();
 
 		System.out.println("The master FISK 2");
 
@@ -22,10 +22,13 @@ public class Main {
 			
 		}
 		
-		SQL sql = new SQL();
+		//SQL sql = new SQL();
 		//sql.NewUser("Daniel", "123", 500);
-		System.out.println(sql.Login("Daniel", "123"));
-		System.out.println(sql.getBalance("Daniel", "123"));
-		sql.setBalance("Daniel", 1000);
+		//System.out.println(sql.Login("Daniel", "123"));
+		//System.out.println(sql.getBalance("Daniel", "123"));
+		//sql.setBalance("Daniel", 1000);
+		//for(int i = 0; i < 100; i++) {
+			//System.out.println("hehe nr hehe: " + i);
+			//}
 	}
 }
