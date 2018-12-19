@@ -7,5 +7,6 @@ public class Main {
 		System.out.println("Hello weldt!");
 		System.out.println("FISK");
 		System.out.println("THIS IS A TEST");
+		System.out.println("The master FISK 2");
 	}
 }
