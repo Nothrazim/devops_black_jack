@@ -13,7 +13,11 @@ public class Deck {
 	
 	public void loop_cards(){
 		for(int suit = 0; suit < suites.length; suit++) {
-			System.out.println("A: " + suites[suit]);
+			System.out.println("Suit: " + suites[suit]);
+			for(int a = 1; a < 13; a++) {
+				deck[a] = new Card(a + " of " + suites[suit], a);
+				System.out.println(deck[a].name);
+				}
 			}
 		}
 	
