@@ -16,4 +16,14 @@ public class Player {
 		
 		return balance;
 	}
+	
+	void playerHand() {
+		
+	}
+	
+	void choose() {
+		//hit/stand/double/split
+	}
+	
+	
 }
