@@ -8,7 +8,6 @@ public class Main {
 		Scanner scanner=new Scanner(System.in);
 		// TODO Auto-generated method stub
 		
-		System.out.println("Hello weldt!");	
 
 		Deck Decktest = new Deck();
 		Decktest.create_deck();

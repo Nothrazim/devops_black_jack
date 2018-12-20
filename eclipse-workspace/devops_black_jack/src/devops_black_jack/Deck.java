@@ -16,7 +16,6 @@ public class Deck {
 	void create_deck(){
 		int y = 0; //counter to run through all cards created for print statements
 		for(int suit = 0; suit < suites.length; suit++) {
-			System.out.println("\nCreating suit: " + suites[suit]);
 			for(int n = 1; n < 14; n++) {
 				if (n == 1) {
 					deck.add(new Card("Ace of " + suites[suit], 1));
@@ -33,20 +32,20 @@ public class Deck {
 				else {
 					deck.add(new Card(n + " of " + suites[suit], n));
 					}
-				System.out.println(deck.get(y).name);
 				y += 1;
 				}
 			}
-		System.out.println("\nDeck has been created.\n");
 		}
 
     
 	void add_decks(int value){
-		ArrayList<Card> temp_deck = deck;
-		for(int x = 1; x < value; x++) {
-			deck.addAll(temp_deck);
+		ArrayList<Card> temp_deck = new ArrayList<Card>();
+		for(int x = 1; x <= value-1; x++) {
+			temp_deck.addAll(deck);
 			}
-		System.out.println(deck.size()-52 + " cards added.");
+		deck.addAll(temp_deck);
+		System.out.println(value + " decks will be used");
+		System.out.println("DECKSIZE " +deck.size());
 		}
 	
 	void shuffle_deck(ArrayList<Card> deck) {
