@@ -63,7 +63,7 @@ public class SQL {
 			Statement s = connect.createStatement();
 			balance = s.executeQuery("select balance from account where username ='"+username+"' and password='"+password+"'");
 			if (balance.next())
-				intbalance = balance.getLong("Balance");
+				intbalance = balance.getDouble("Balance");
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
