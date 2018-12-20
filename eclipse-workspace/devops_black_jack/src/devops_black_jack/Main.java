@@ -1,4 +1,5 @@
 package devops_black_jack;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -19,10 +20,57 @@ public class Main {
 		Decktest.add_decks(deck_selection);
 		
 		Decktest.shuffle_deck(Decktest.deck);
-		Decktest.print_deck(Decktest.deck);
-		Card drawncard = Decktest.draw_card();
-		System.out.println("I DREW THIS " + drawncard.getName());
 		
+		//place bets
+
+		int dealer_value = 0;
+		ArrayList<Card> dealer_hand = new ArrayList<Card>();
+		
+		
+		//dealer draws first card.
+		System.out.println("\nDealer begins to draw.");
+		Card dealer_card = Decktest.draw_card();
+		dealer_hand.add(dealer_card);
+		System.out.println("House first card: " + dealer_card.getName());
+		dealer_value += dealer_card.value;
+		System.out.println("House first value: " + dealer_value + "\n");
+
+		//
+		//Player(s): Initial card draw
+		//
+		
+		
+		//
+		//Player(s): Choose hit/stand/double/split
+		//
+
+		//
+		//Player(s): Resolve results
+		//
+		
+		//dealer draws remaining cards until threshold of 17
+		boolean dealer_draw_check = true;
+		while(dealer_draw_check) {
+			if (dealer_value >= 17) {
+				dealer_draw_check = false;
+			}
+			else {
+				dealer_card = Decktest.draw_card();
+				dealer_hand.add(dealer_card);
+				System.out.println("House drew: " + dealer_card.getName());
+				dealer_value += dealer_card.value;
+				System.out.println("House value is: " + dealer_value);
+				}
+			}
+
+		System.out.println("\ndealer final value: " + dealer_value);
+		for (Card object: dealer_hand) {
+			    System.out.println("The house's final draw: "+object.name);
+			    }
+		
+		//
+		//Player: Loop through and compare vs dealer_hand
+		//
 		
 		
 		SQL sql = new SQL();
