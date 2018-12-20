@@ -56,4 +56,12 @@ public class Player {
 		balance = balance+difference;
 	}
 	
+	public double getBalance() {
+		return balance;
+	}
+	
+	public String getNameofplayer() {
+		return name;
+	}
+	
 }
