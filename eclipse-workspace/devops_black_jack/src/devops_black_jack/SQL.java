@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 public class SQL {
 	
+	static String DB_URL = "jdbc:mysql://java.bx.nimell.se:33306/casino";
 	Connection connect;
 	public SQL(){
 		try {
@@ -18,7 +19,7 @@ public class SQL {
 			e1.printStackTrace();
 		}
 		try {
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/Casino?" + "user=root");
+			connect = DriverManager.getConnection(DB_URL, "coffee", "hunter12");
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
