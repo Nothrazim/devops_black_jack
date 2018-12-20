@@ -35,10 +35,16 @@ public class Player {
 	}
 	
 	public void setBet(double bet) {
-		this.bet = bet;
-		
-		
+		this.bet = bet;	
 	}
+	
+	
+	public double getBet() {
+		return bet;
+	}
+		
+		
+	
 	public int setHandValue() {
 		for (Card card: this.hand) {
 			this.hand_value += card.value;
@@ -46,7 +52,7 @@ public class Player {
 		return hand_value;
 	}
 	
-	public void updateBalance(int difference) {
+	public void updateBalance(double difference) {
 		balance = balance+difference;
 	}
 	

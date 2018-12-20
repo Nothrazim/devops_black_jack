@@ -5,10 +5,6 @@ import java.util.*;
 public class Deck {
 	static String[] suites = {"Hearts", "Spades", "Diamonds", "Clubs"};
 	
-	Deck(){
-		System.out.println();
-	}
-	
 	static ArrayList<Card> deck = new ArrayList<Card>();
 	
 	

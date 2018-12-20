@@ -4,6 +4,10 @@ import java.util.ArrayList;
 public class Dealer {
 	int hand_value = 0;
 	ArrayList<Card> hand = new ArrayList<Card>();
+	Deck Deck;
+	public Dealer() {
+		Deck = new Deck();
+	}
 		
 	//dealer draws first card.
 	void draw_first_card() {
@@ -43,28 +47,27 @@ public class Dealer {
 			System.out.println(player.name + " pval: " + pval + ", dealer val: " + dval);
 			if (hand_value == 21 && pval == 21) { //double blackjack
 				System.out.println(player.name + " gets money back");
-				//update player.balance (with 0)
 			}
 			else if (dval == 21) { //dealer blackjacks
 				System.out.println("dealer blackjacks, dealer wins");
-				//update player.balance
+				player.updateBalance(-(player.getBet()));
 				}
 			else if (pval == 21) { //player blackjacks
 				System.out.println("player blackjacks, " + player.name + " wins");
-				//update player.balance
+				player.updateBalance(player.getBet()*1.5);
 				}
 			else { 
 				if (dval > 21) { //dealer busts
 					System.out.println("dealer busts, " + player.name + " wins");
-					//update player.balance
+					player.updateBalance(player.getBet());
 					}
 				else if (pval > dval && pval <= 21) {
 					System.out.println("player is higher than dealer, " + player.name + " wins");
-					//update player.balance
+					player.updateBalance(player.getBet());
 					}
 				else {
 					System.out.println("dealer is higher than player, dealer wins.");
-					//update player.balance
+					player.updateBalance(-(player.getBet()));
 					}
 				}
 			player.bet = 0;
