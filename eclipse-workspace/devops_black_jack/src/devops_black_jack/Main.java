@@ -1,7 +1,4 @@
 package devops_black_jack;
-
-
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -35,17 +32,11 @@ public class Main {
 			player.setBet(player_bet);
 			}
 
-		int dealer_value = 0;
-		ArrayList<Card> dealer_hand = new ArrayList<Card>();
-			
+		Dealer theDealer = new Dealer();
+		
 		//dealer draws first card.
-		System.out.println("\nDealer begins to draw.");
-		Card dealer_card = Deck.draw_card();
-		dealer_hand.add(dealer_card);
-		System.out.println("House first card: " + dealer_card.getName());
-		dealer_value += dealer_card.value;
-		System.out.println("House first value: " + dealer_value + "\n");
-
+		theDealer.draw_first_card();
+		
 		//
 		//Player(s): Initial card draw
 		//
@@ -73,35 +64,18 @@ public class Main {
 		
 		
 		//dealer draws remaining cards until threshold of 17
-		boolean dealer_draw_check = true;
-		while(dealer_draw_check) {
-			if (dealer_value >= 17) {
-				dealer_draw_check = false;
-			}
-			else {
-				dealer_card = Deck.draw_card();
-				dealer_hand.add(dealer_card);
-				System.out.println("House drew: " + dealer_card.getName());
-				dealer_value += dealer_card.value;
-				System.out.println("House value is: " + dealer_value);
-				}
-			}
-
-		System.out.println("\ndealer final value: " + dealer_value);
-		for (Card object: dealer_hand) {
-			    System.out.println("The house's final draw: "+object.name);
-			    }
-		
+		theDealer.draw_more();
 		//
 		//Player(s): Loop through player list and compare vs dealer_hand
 		//
 		for (Player player: player_list) {
 			int pval = player.setHandValue();
-			System.out.println(player.name + " pval: " + pval + ", dealer val: " + dealer_value);
-			if (dealer_value == 21 && pval == 21) { //double blackjack
+			int dval = theDealer.hand_value;
+			System.out.println(player.name + " pval: " + pval + ", dealer val: " + dval);
+			if (theDealer.hand_value == 21 && pval == 21) { //double blackjack
 				System.out.println(player.name + " gets money back");
 			}
-			else if (dealer_value == 21) { //dealer blackjacks
+			else if (dval == 21) { //dealer blackjacks
 				System.out.println("dealer blackjacks, dealer wins");
 				player.balance -= player.bet;
 				}
@@ -110,11 +84,11 @@ public class Main {
 				player.balance += player.bet;
 				}
 			else { 
-				if (dealer_value > 21) { //dealer busts
+				if (dval > 21) { //dealer busts
 					System.out.println("dealer busts, " + player.name + " wins");
 					player.balance += player.bet;
 					}
-				else if (pval > dealer_value && pval <= 21) {
+				else if (pval > dval && pval <= 21) {
 					System.out.println("player is higher than dealer, " + player.name + " wins");
 					player.balance += player.bet;
 					}

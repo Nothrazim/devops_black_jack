@@ -1,9 +1,6 @@
 package devops_black_jack;
 
-
-
 import java.util.*;
-import devops_black_jack.Card;
 
 public class Deck {
 	static String[] suites = {"Hearts", "Spades", "Diamonds", "Clubs"};
