@@ -6,26 +6,19 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner scanner=new Scanner(System.in);
-		
-		Deck Deck = new Deck();
-		
-		Deck.create_deck();
 
-		
-		
-		
-		
-		
 		ArrayList<Player> player_list = new ArrayList<Player>();
 		Player player1 = new Player("Alice", 4);
 		Player player2 = new Player("Bob", 4);
+		Deck Deck = new Deck();
+		Dealer theDealer = new Dealer();
+		String[] player_choices = {"Hit", "Stand", "Double", "Split"};
 		
-		
-		
+		Deck.create_deck();
+	
 		player_list.add(player1);
 		player_list.add(player2);
 
-		//This goes into Game
 		System.out.println("How many decks do you want to use?");	
 		int deck_selection=scanner.nextInt();
 		Deck.add_decks(deck_selection);
@@ -34,79 +27,51 @@ public class Main {
 		
 		//place bets
 		for (Player player: player_list) {
-			System.out.println(player.name + ", what will you bet?");
+			System.out.println(player.getName() + ", what will you bet?");
 			int player_bet=scanner.nextInt();
 			player.setBet(player_bet);
 			}
 
-		Dealer theDealer = new Dealer();
-		
 		//dealer draws first card.
 		theDealer.draw_first_card();
 		
 		//
 		//Player(s): Initial card draw
-		
-			
-		
+				
 		for (Player player: player_list) {
 			player.drawcard();
 			player.drawcard();
-			System.out.println(player.name + " has drawn 2 cards.");
+			System.out.println(player.getName() + " has drawn;");
+			player.getHand();
 			}
+		
+		System.out.println("\n");
 		
 		//
 		//Player(s): Choose hit/stand/double/split
 		//
-
-		//
-		//Player(s): Resolve results
-		//
-		
 		for (Player player: player_list) {
-			System.out.println(player.name + ", your hand contains:");
-			for (Card card: player.hand) {
-				System.out.println(card.name);
-				}
+			System.out.println(player.getName() + ", your hand contains:");
+			player.getHand();
+			System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
+			if (player.balance >= player.bet * 2) {
+				System.out.println(player_choices[2]);
 			}
-		
+			if (player.hand.get(0).value == player.hand.get(1).value) {
+				System.out.println(player_choices[3]);
+			}
+			String choice = scanner.next();
+			player.chooseAction(choice); //results will be handled in Player methods
+			}
+
 		
 		//dealer draws remaining cards until threshold of 17
 		theDealer.draw_more();
 		//
 		//Player(s): Loop through player list and compare vs dealer_hand
 		//
-		for (Player player: player_list) {
-			int pval = player.setHandValue();
-			int dval = theDealer.hand_value;
-			System.out.println(player.name + " pval: " + pval + ", dealer val: " + dval);
-			if (theDealer.hand_value == 21 && pval == 21) { //double blackjack
-				System.out.println(player.name + " gets money back");
-			}
-			else if (dval == 21) { //dealer blackjacks
-				System.out.println("dealer blackjacks, dealer wins");
-				player.balance -= player.bet;
-				}
-			else if (pval == 21) { //player blackjacks
-				System.out.println("player blackjacks, " + player.name + " wins");
-				player.balance += player.bet;
-				}
-			else { 
-				if (dval > 21) { //dealer busts
-					System.out.println("dealer busts, " + player.name + " wins");
-					player.balance += player.bet;
-					}
-				else if (pval > dval && pval <= 21) {
-					System.out.println("player is higher than dealer, " + player.name + " wins");
-					player.balance += player.bet;
-					}
-				else {
-					System.out.println("dealer is higher than player, dealer wins.");
-					player.balance -= player.bet;
-					}
-				}
-			player.bet = 0;
-			}
+		
+		theDealer.deduce_winner(player_list);
 		
 		SQL sql = new SQL();
 		sql.NewUser("Daniel", "123", 500);

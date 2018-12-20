@@ -1,7 +1,4 @@
 package devops_black_jack;
-
-
-
 import java.util.ArrayList;
 
 public class Player {
@@ -19,6 +16,29 @@ public class Player {
 		Deck = new Deck();
 	}
 	
+	void chooseAction(String choice) {
+		if (choice.equals("Hit")) {
+			Hit();
+		}
+		else if (choice.equals("Stand")) {
+			Stand();
+		}
+		else if (choice.equals("Double")) {
+			Doubledown();
+		}
+		if (choice.equals("Split")) {
+			Split();
+		}
+	}
+	
+	void Hit() {
+		System.out.println("Hit!");
+	}
+
+	void Stand() {
+		System.out.println("Stand!");
+	}
+	
 	String Doubledown() {
 		if(balance>=bet*2) {
 			bet = bet*2;
@@ -28,22 +48,31 @@ public class Player {
 		else
 			return "You dont have enough credits";
 	}
+
+	void Split() {
+		System.out.println("Split!");
+	}	
 	
 	void drawcard() {
 		Card card = Deck.draw_card();
 		hand.add(card);
 	}
 	
+	public void updateBalance(double difference) {
+		balance = balance+difference;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+	
 	public void setBet(double bet) {
 		this.bet = bet;	
 	}
 	
-	
 	public double getBet() {
 		return bet;
 	}
-		
-		
 	
 	public int setHandValue() {
 		for (Card card: this.hand) {
@@ -51,16 +80,14 @@ public class Player {
 			}
 		return hand_value;
 	}
+
+	public void getHand() {
+		for (Card card: this.hand) {
+			System.out.println(card.name);
+			}
+		}	
 	
-	public void updateBalance(double difference) {
-		balance = balance+difference;
-	}
-	
-	public double getBalance() {
-		return balance;
-	}
-	
-	public String getNameofplayer() {
+	public String getName() {
 		return name;
 	}
 	
