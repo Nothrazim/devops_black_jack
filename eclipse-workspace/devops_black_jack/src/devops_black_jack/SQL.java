@@ -55,14 +55,14 @@ public class SQL {
 	}
 	}
 		
-	public int getBalance(String username, String password) {
+	public float getBalance(String username, String password) {
 		ResultSet balance = null;
-		int intbalance = -1;
+		float intbalance = -1;
 		try {
 			Statement s = connect.createStatement();
 			balance = s.executeQuery("select balance from account where username ='"+username+"' and password='"+password+"'");
 			if (balance.next())
-				intbalance = balance.getInt("Balance");
+				intbalance = balance.getFloat("Balance");
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -70,7 +70,7 @@ public class SQL {
 		return intbalance;
 	}
 	
-	public boolean setBalance(String username, int balance) {
+	public boolean setBalance(String username, float balance) {
 		try {
 			PreparedStatement s = connect.prepareStatement("update account set balance='"+balance+"' where username = '"+username+"'");
 			s.executeUpdate();
