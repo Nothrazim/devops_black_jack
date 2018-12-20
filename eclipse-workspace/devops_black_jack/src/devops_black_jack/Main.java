@@ -11,9 +11,16 @@ public class Main {
 		
 		Deck.create_deck();
 
+		
+		
+		
+		
+		
 		ArrayList<Player> player_list = new ArrayList<Player>();
 		Player player1 = new Player("Alice", 4);
 		Player player2 = new Player("Bob", 4);
+		
+		
 		
 		player_list.add(player1);
 		player_list.add(player2);
@@ -39,7 +46,8 @@ public class Main {
 		
 		//
 		//Player(s): Initial card draw
-		//
+		
+			
 		
 		for (Player player: player_list) {
 			player.drawcard();

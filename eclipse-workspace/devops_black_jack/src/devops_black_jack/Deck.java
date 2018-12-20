@@ -58,7 +58,8 @@ public class Deck {
 		}
 	}
 	
-	static Card draw_card() {
+
+	public Card draw_card() {
 		Card card = deck.get(0);
 		deck.remove(0);
 		return card;

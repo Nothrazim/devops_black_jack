@@ -10,11 +10,13 @@ public class Player {
 	double balance;
 	String name;
 	double bet;
+	Deck Deck;
 	ArrayList<Card> hand = new ArrayList<Card>();
 	
 	public Player(String name, double balance){
 		this.balance = balance;
 		this.name = name;
+		Deck = new Deck();
 	}
 	
 	String Doubledown() {
@@ -34,12 +36,18 @@ public class Player {
 	
 	public void setBet(double bet) {
 		this.bet = bet;
+		
+		
 	}
 	public int setHandValue() {
 		for (Card card: this.hand) {
 			this.hand_value += card.value;
 			}
 		return hand_value;
+	}
+	
+	public void updateBalance(int difference) {
+		balance = balance+difference;
 	}
 	
 }
