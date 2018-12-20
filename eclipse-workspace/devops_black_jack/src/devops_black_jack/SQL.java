@@ -1,5 +1,6 @@
 package devops_black_jack;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,27 +20,23 @@ public class SQL {
 			e1.printStackTrace();
 		}
 		try {
-			connect = DriverManager.getConnection(DB_URL, "coffee", "hunter12");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost/throwaway?" + "user=root");
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	//RETURNS TRUE IS SUCCESSFUL, FALSE IF NOT	
-	public boolean NewUser(String username, String password, int balance) {
-		if (this.Login(username, password))  // Try logging in before creating new user
-			return true;
-		else {
-			try {  // Create new user
-				PreparedStatement s = connect.prepareStatement("insert into account values(default, ?, ?, ?)");
-				s.setString(1, username);
-				s.setString(2, password);
-				s.setInt(3, balance);
-				s.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
+	public boolean NewUser(String username, String password, double balance) {
+		try {
+			PreparedStatement s = connect.prepareStatement("insert into account values(default, ?, ?, ?)");
+			s.setString(1, username);
+			s.setString(2, password);
+			s.setDouble(3, balance);
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 		return true;
 	}
@@ -59,14 +56,14 @@ public class SQL {
 	}
 	}
 		
-	public float getBalance(String username, String password) {
+	public double getBalance(String username, String password) {
 		ResultSet balance = null;
-		float intbalance = -1;
+		double intbalance = -1;
 		try {
 			Statement s = connect.createStatement();
 			balance = s.executeQuery("select balance from account where username ='"+username+"' and password='"+password+"'");
 			if (balance.next())
-				intbalance = balance.getFloat("Balance");
+				intbalance = balance.getDouble("Balance");
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -74,9 +71,10 @@ public class SQL {
 		return intbalance;
 	}
 	
-	public boolean setBalance(String username, float balance) {
+	public boolean setBalance(String username, double balance) {
 		try {
-			PreparedStatement s = connect.prepareStatement("update account set balance='"+balance+"' where username = '"+username+"'");
+			BigDecimal decimalbalance = BigDecimal.valueOf(balance);
+			PreparedStatement s = connect.prepareStatement("update account set balance='"+decimalbalance+"' where username = '"+username+"'");
 			s.executeUpdate();
 			return true;
 		}
