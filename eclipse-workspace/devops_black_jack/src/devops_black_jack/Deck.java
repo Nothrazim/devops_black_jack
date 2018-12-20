@@ -1,35 +1,71 @@
 package devops_black_jack;
 
+import java.util.*;
 import devops_black_jack.Card;
 
 public class Deck {
+	String[] suites = {"Hearts", "Spades", "Diamonds", "Clubs"};
+	
 	Deck(){
 		System.out.println();
 	}
 	
-	Card[] deck = new Card[52];
-
-	String[] suites = {"Hearts", "Spades", "Diamonds", "Clubs"};
+	ArrayList<Card> deck = new ArrayList<Card>();
 	
-	void loop_cards(){
+	
+	void create_deck(){
+		int y = 0; //counter to run through all cards created for print statements
 		for(int suit = 0; suit < suites.length; suit++) {
-			System.out.println("Suit: " + suites[suit]);
+			System.out.println("\nCreating suit: " + suites[suit]);
 			for(int n = 1; n < 14; n++) {
-				if (n == 11) {
-					deck[n] = new Card("Jack of " + suites[suit], 10);
+				if (n == 1) {
+					deck.add(new Card("Ace of " + suites[suit], 1));
+					}
+				else if (n == 11) {
+					deck.add(new Card("Jack of " + suites[suit], 10));
 					}
 				else if (n == 12) {
-					deck[n] = new Card("Queen of " + suites[suit], 10);
+					deck.add(new Card("Queen of " + suites[suit], 10));
 					}
 				else if (n == 13) {
-					deck[n] = new Card("King of " + suites[suit], 10);
+					deck.add(new Card("King of " + suites[suit], 10));
 					}
 				else {
-					deck[n] = new Card(n + " of " + suites[suit], n);
-					System.out.println(deck[n].name);
+					deck.add(new Card(n + " of " + suites[suit], n));
 					}
+				System.out.println(deck.get(y).name);
+				y += 1;
 				}
 			}
+		System.out.println("\nDeck has been created.\n");
 		}
+
+    
+	void add_decks(int value){
+		ArrayList<Card> temp_deck = deck;
+		for(int x = 1; x < value; x++) {
+			deck.addAll(temp_deck);
+			}
+		System.out.println(deck.size()-52 + " cards added.");
+		}
+	
+	void shuffle_deck(ArrayList<Card> deck) {
+		Collections.shuffle(deck);
+		System.out.println("Deck has been shuffled.");
+	}
+	
+	void print_deck(ArrayList<Card> deck) {
+		for (Card object: deck) {
+		    System.out.println(object.name);
+		}
+	}
+	
+	Card draw_card() {
+		Random rand = new Random();
+		int cardindex = rand.nextInt(deck.size());
+		Card card = deck.get(cardindex);
+		deck.remove(cardindex);
+		return card;
+	}
 	
 }
