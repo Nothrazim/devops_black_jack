@@ -27,15 +27,19 @@ public class SQL {
 	}
 	//RETURNS TRUE IS SUCCESSFUL, FALSE IF NOT	
 	public boolean NewUser(String username, String password, int balance) {
-		try {
-			PreparedStatement s = connect.prepareStatement("insert into account values(default, ?, ?, ?)");
-			s.setString(1, username);
-			s.setString(2, password);
-			s.setInt(3, balance);
-			s.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
+		if (this.Login(username, password))  // Try logging in before creating new user
+			return true;
+		else {
+			try {  // Create new user
+				PreparedStatement s = connect.prepareStatement("insert into account values(default, ?, ?, ?)");
+				s.setString(1, username);
+				s.setString(2, password);
+				s.setInt(3, balance);
+				s.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
 		return true;
 	}
