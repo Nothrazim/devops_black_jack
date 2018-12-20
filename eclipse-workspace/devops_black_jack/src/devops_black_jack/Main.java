@@ -1,26 +1,27 @@
 package devops_black_jack;
+import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
+		Scanner scanner=new Scanner(System.in);
 		// TODO Auto-generated method stub
+		
 		System.out.println("Hello weldt!");	
 
 		Deck Decktest = new Deck();
-		Decktest.loop_cards();
-
-		System.out.println("The master FISK 2");
-
-		System.out.println("THIS IS A LOT OF TESTS");
-		System.out.println("THIS IS A TEST");
-		System.out.println("THIS IS A TEST");
-		System.out.println("THIS IS A TEST");
+		Decktest.create_deck();
 
 
-		for(int i = 0; i < 100; i++) {
-			System.out.println("hehe nr hehe: " + i);
-			
-		}
+		//This goes into Game
+		System.out.println("How many decks do you want to use?");	
+		int deck_selection=scanner.nextInt();
+		Decktest.add_decks(deck_selection);
+		
+		Decktest.shuffle_deck(Decktest.deck);
+		Decktest.print_deck(Decktest.deck);
+		
+
 		
 		SQL sql = new SQL();
 		sql.NewUser("Daniel", "123", 500);
@@ -30,5 +31,6 @@ public class Main {
 		//for(int i = 0; i < 100; i++) {
 			//System.out.println("hehe nr hehe: " + i);
 			//}
+		//scanner.close();
 	}
 }
