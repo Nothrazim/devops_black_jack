@@ -100,7 +100,6 @@ public class Main {
 			System.out.println(player.name + " pval: " + pval + ", dealer val: " + dealer_value);
 			if (dealer_value == 21 && pval == 21) { //double blackjack
 				System.out.println(player.name + " gets money back");
-				player.bet = 0;
 			}
 			else if (dealer_value == 21) { //dealer blackjacks
 				System.out.println("dealer blackjacks, dealer wins");
@@ -109,24 +108,22 @@ public class Main {
 			else if (pval == 21) { //player blackjacks
 				System.out.println("player blackjacks, " + player.name + " wins");
 				player.balance += player.bet;
-				player.bet = 0;
 				}
 			else { 
 				if (dealer_value > 21) { //dealer busts
 					System.out.println("dealer busts, " + player.name + " wins");
 					player.balance += player.bet;
-					player.bet = 0;
 					}
 				else if (pval > dealer_value && pval <= 21) {
 					System.out.println("player is higher than dealer, " + player.name + " wins");
 					player.balance += player.bet;
-					player.bet = 0;
 					}
 				else {
 					System.out.println("dealer is higher than player, dealer wins.");
 					player.balance -= player.bet;
 					}
 				}
+			player.bet = 0;
 			}
 		
 		SQL sql = new SQL();
