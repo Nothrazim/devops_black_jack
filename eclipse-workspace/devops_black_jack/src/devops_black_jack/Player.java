@@ -35,4 +35,8 @@ public class Player {
 		this.bet = bet;
 	}
 	
+	public ArrayList<Card> getHand(){
+		return hand;
+	}
+	
 }

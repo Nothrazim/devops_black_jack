@@ -36,7 +36,23 @@ public class Main {
 
 		//
 		//Player(s): Initial card draw
-		//
+		ArrayList<Card> phand;
+		Player player = new Player("Player", 5000);
+		player.drawcard();
+		phand = player.getHand();
+		for(Card c: phand) {
+			System.out.println(c.getName());
+		}
+		int choice = scanner.nextInt();
+		System.out.println("What would you like to do? [1] Hit");
+		if(choice == 1) {
+			player.drawcard();
+			phand = player.getHand();
+			for(Card c: phand) {
+				System.out.println(c.getName());
+			}
+		}
+			
 		
 		
 		//

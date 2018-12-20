@@ -10,7 +10,7 @@ public class Deck {
 		System.out.println();
 	}
 	
-	ArrayList<Card> deck = new ArrayList<Card>();
+	static ArrayList<Card> deck = new ArrayList<Card>();
 	
 	
 	void create_deck(){
@@ -60,8 +60,8 @@ public class Deck {
 	}
 	
 	Card draw_card() {
-		Card card = deck.get(0);
-		deck.remove(0);
+		Card card = this.deck.get(0);
+		this.deck.remove(0);
 		return card;
 	}
 	
