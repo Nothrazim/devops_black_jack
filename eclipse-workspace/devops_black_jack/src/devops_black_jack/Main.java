@@ -1,17 +1,27 @@
 package devops_black_jack;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Card;
+import Deck;
+import Player;
+import SQL;
 
 public class Main {
 
 	public static void main(String[] args) {
 		Scanner scanner=new Scanner(System.in);
-		// TODO Auto-generated method stub
 		
-
 		Deck Decktest = new Deck();
 		Decktest.create_deck();
 
+		ArrayList<Player> player_list = new ArrayList<Player>();
+		Player player1 = new Player("Alice", 4);
+		Player player2 = new Player("Bob", 4);
+		
+		player_list.add(player1);
+		player_list.add(player2);
 
 		//This goes into Game
 		System.out.println("How many decks do you want to use?");	
@@ -21,11 +31,15 @@ public class Main {
 		Decktest.shuffle_deck(Decktest.deck);
 		
 		//place bets
+		for (Player player: player_list) {
+			System.out.println(player.name + ", what will you bet?");
+			int player_bet=scanner.nextInt();
+			player.setBet(player_bet);
+			}
 
 		int dealer_value = 0;
 		ArrayList<Card> dealer_hand = new ArrayList<Card>();
-		
-		
+			
 		//dealer draws first card.
 		System.out.println("\nDealer begins to draw.");
 		Card dealer_card = Decktest.draw_card();
@@ -37,7 +51,10 @@ public class Main {
 		//
 		//Player(s): Initial card draw
 		//
-		
+		for (Player player: player_list) {
+			player.drawcard();  //drawcard not functioning right now
+			System.out.println(player.name + "has drawn a card.");
+			}
 		
 		//
 		//Player(s): Choose hit/stand/double/split
@@ -46,6 +63,12 @@ public class Main {
 		//
 		//Player(s): Resolve results
 		//
+		for (Player player: player_list) {
+			System.out.println(player.name + ", your hand contains");
+			for (Card card: player.hand) {
+				System.out.println(card.name);
+				}
+			}
 		
 		//dealer draws remaining cards until threshold of 17
 		boolean dealer_draw_check = true;
@@ -77,9 +100,6 @@ public class Main {
 		System.out.println(sql.Login("Daniel", "123"));
 		System.out.println(sql.getBalance("Daniel", "123"));
 		sql.setBalance("Daniel", 8991.123212d);
-		//for(int i = 0; i < 100; i++) {
-			//System.out.println("hehe nr hehe: " + i);
-			//}
-		//scanner.close();
+		scanner.close();
 	}
 }
