@@ -27,7 +27,7 @@ public class Main {
 		
 		SQL sql = new SQL();
 		sql.NewUser("Daniel", "123", 500);
-		//System.out.println(sql.Login("Daniel", "123"));
+		System.out.println(sql.Login("Daniel", "123"));
 		System.out.println(sql.getBalance("Daniel", "123"));
 		sql.setBalance("Daniel", 1000);
 		//for(int i = 0; i < 100; i++) {

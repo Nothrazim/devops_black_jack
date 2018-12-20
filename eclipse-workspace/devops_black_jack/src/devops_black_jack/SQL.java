@@ -1,5 +1,6 @@
 package devops_black_jack;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ public class SQL {
 			e1.printStackTrace();
 		}
 		try {
-			connect = DriverManager.getConnection(DB_URL, "coffee", "hunter12");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost/throwaway?" + "user=root");
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -55,14 +56,14 @@ public class SQL {
 	}
 	}
 		
-	public float getBalance(String username, String password) {
+	public long getBalance(String username, String password) {
 		ResultSet balance = null;
-		float intbalance = -1;
+		long intbalance = -1;
 		try {
 			Statement s = connect.createStatement();
 			balance = s.executeQuery("select balance from account where username ='"+username+"' and password='"+password+"'");
 			if (balance.next())
-				intbalance = balance.getFloat("Balance");
+				intbalance = balance.getLong("Balance");
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -70,9 +71,10 @@ public class SQL {
 		return intbalance;
 	}
 	
-	public boolean setBalance(String username, float balance) {
+	public boolean setBalance(String username, long balance) {
 		try {
-			PreparedStatement s = connect.prepareStatement("update account set balance='"+balance+"' where username = '"+username+"'");
+			java.math.BigDecimal decimalbalance = java.math.BigDecimal.valueOf(balance);
+			PreparedStatement s = connect.prepareStatement("update account set balance='"+decimalbalance+"' where username = '"+username+"'");
 			s.executeUpdate();
 			return true;
 		}
