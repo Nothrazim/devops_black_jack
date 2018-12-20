@@ -61,10 +61,8 @@ public class Deck {
 	}
 	
 	Card draw_card() {
-		Random rand = new Random();
-		int cardindex = rand.nextInt(deck.size());
-		Card card = deck.get(cardindex);
-		deck.remove(cardindex);
+		Card card = deck.get(0);
+		deck.remove(0);
 		return card;
 	}
 	
