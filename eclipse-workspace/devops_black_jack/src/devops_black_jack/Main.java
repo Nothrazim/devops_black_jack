@@ -4,11 +4,6 @@ package devops_black_jack;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Card;
-import Deck;
-import Player;
-import SQL;
-
 public class Main {
 
 	public static void main(String[] args) {
