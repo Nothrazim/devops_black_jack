@@ -18,7 +18,7 @@ public class Main {
 		int deck_selection=scanner.nextInt();
 		Decktest.add_decks(deck_selection);
 		
-		Decktest.shuffle_deck(Deck.deck);
+		Decktest.shuffle_deck(Decktest.deck);
 		
 		//place bets
 
