@@ -1,8 +1,7 @@
 package devops_black_jack;
 
 public class Player {
-	int pott;
-	int balance;
+	float balance;
 	
 	
 	
@@ -12,7 +11,7 @@ public class Player {
 	
 	
 	
-	public int checkBalance() {
+	public float checkBalance() {
 		
 		return balance;
 	}
