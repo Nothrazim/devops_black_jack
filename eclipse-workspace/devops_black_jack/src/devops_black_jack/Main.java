@@ -1,5 +1,6 @@
 package devops_black_jack;
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,8 +14,7 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner scanner=new Scanner(System.in);
 		
-		Deck Decktest = new Deck();
-		Decktest.create_deck();
+		Deck.create_deck();
 
 		ArrayList<Player> player_list = new ArrayList<Player>();
 		Player player1 = new Player("Alice", 4);
@@ -26,9 +26,9 @@ public class Main {
 		//This goes into Game
 		System.out.println("How many decks do you want to use?");	
 		int deck_selection=scanner.nextInt();
-		Decktest.add_decks(deck_selection);
+		Deck.add_decks(deck_selection);
 		
-		Decktest.shuffle_deck(Decktest.deck);
+		Deck.shuffle_deck();
 		
 		//place bets
 		for (Player player: player_list) {
@@ -42,7 +42,7 @@ public class Main {
 			
 		//dealer draws first card.
 		System.out.println("\nDealer begins to draw.");
-		Card dealer_card = Decktest.draw_card();
+		Card dealer_card = Deck.draw_card();
 		dealer_hand.add(dealer_card);
 		System.out.println("House first card: " + dealer_card.getName());
 		dealer_value += dealer_card.value;
@@ -77,7 +77,7 @@ public class Main {
 				dealer_draw_check = false;
 			}
 			else {
-				dealer_card = Decktest.draw_card();
+				dealer_card = Deck.draw_card();
 				dealer_hand.add(dealer_card);
 				System.out.println("House drew: " + dealer_card.getName());
 				dealer_value += dealer_card.value;

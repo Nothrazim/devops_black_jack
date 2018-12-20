@@ -1,11 +1,11 @@
 package devops_black_jack;
 
+
 import java.util.ArrayList;
 
 public class Player {
 	
 	double balance;
-	Deck deck;
 	String name;
 	double bet;
 	ArrayList<Card> hand = new ArrayList<Card>();
@@ -13,7 +13,6 @@ public class Player {
 	public Player(String name, double balance){
 		this.balance = balance;
 		this.name = name;
-		deck = new Deck();
 	}
 	
 	String Doubledown() {
@@ -27,7 +26,7 @@ public class Player {
 	}
 	
 	void drawcard() {
-		Card card = deck.draw_card();
+		Card card = Deck.draw_card();
 		hand.add(card);
 	}
 	
