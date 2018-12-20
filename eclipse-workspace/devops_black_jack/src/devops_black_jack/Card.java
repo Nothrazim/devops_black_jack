@@ -9,8 +9,4 @@ public class Card {
 		this.value = value;
 	}
 	
-	void courtCard(int value){
-		System.out.println("HI!");
-	}
-	
 }
