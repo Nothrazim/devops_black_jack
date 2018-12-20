@@ -1,10 +1,12 @@
 package devops_black_jack;
 
 
+
 import java.util.ArrayList;
 
 public class Player {
 	
+	int hand_value;
 	double balance;
 	String name;
 	double bet;
@@ -32,6 +34,12 @@ public class Player {
 	
 	public void setBet(double bet) {
 		this.bet = bet;
+	}
+	public int setHandValue() {
+		for (Card card: this.hand) {
+			this.hand_value += card.value;
+			}
+		return hand_value;
 	}
 	
 }

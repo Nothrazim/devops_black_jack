@@ -1,6 +1,7 @@
 package devops_black_jack;
 
 
+
 import java.util.*;
 import devops_black_jack.Card;
 
@@ -14,7 +15,7 @@ public class Deck {
 	static ArrayList<Card> deck = new ArrayList<Card>();
 	
 	
-	static void create_deck(){
+	void create_deck(){
 		int y = 0; //counter to run through all cards created for print statements
 		for(int suit = 0; suit < suites.length; suit++) {
 			for(int n = 1; n < 14; n++) {
@@ -39,7 +40,7 @@ public class Deck {
 		}
 
     
-	static void add_decks(int value){
+	void add_decks(int value){
 		ArrayList<Card> temp_deck = new ArrayList<Card>();
 		for(int x = 1; x <= value-1; x++) {
 			temp_deck.addAll(deck);
@@ -49,7 +50,7 @@ public class Deck {
 		System.out.println("DECKSIZE " +deck.size());
 		}
 	
-	static void shuffle_deck() {
+	void shuffle_deck() {
 		Collections.shuffle(deck);
 		System.out.println("Deck has been shuffled.");
 	}

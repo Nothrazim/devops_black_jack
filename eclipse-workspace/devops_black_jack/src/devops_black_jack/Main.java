@@ -1,18 +1,17 @@
 package devops_black_jack;
 
 
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Card;
-import Deck;
-import Player;
-import SQL;
 
 public class Main {
 
 	public static void main(String[] args) {
 		Scanner scanner=new Scanner(System.in);
+		
+		Deck Deck = new Deck();
 		
 		Deck.create_deck();
 
@@ -51,9 +50,11 @@ public class Main {
 		//
 		//Player(s): Initial card draw
 		//
+		
 		for (Player player: player_list) {
-			player.drawcard();  //drawcard not functioning right now
-			System.out.println(player.name + "has drawn a card.");
+			player.drawcard();
+			player.drawcard();
+			System.out.println(player.name + " has drawn 2 cards.");
 			}
 		
 		//
@@ -63,12 +64,14 @@ public class Main {
 		//
 		//Player(s): Resolve results
 		//
+		
 		for (Player player: player_list) {
-			System.out.println(player.name + ", your hand contains");
+			System.out.println(player.name + ", your hand contains:");
 			for (Card card: player.hand) {
 				System.out.println(card.name);
 				}
 			}
+		
 		
 		//dealer draws remaining cards until threshold of 17
 		boolean dealer_draw_check = true;
@@ -91,9 +94,41 @@ public class Main {
 			    }
 		
 		//
-		//Player: Loop through and compare vs dealer_hand
+		//Player(s): Loop through player list and compare vs dealer_hand
 		//
-		
+		for (Player player: player_list) {
+			int pval = player.setHandValue();
+			System.out.println(player.name + " pval: " + pval + ", dealer val: " + dealer_value);
+			if (dealer_value == 21 && pval == 21) { //double blackjack
+				System.out.println(player.name + " gets money back");
+				player.bet = 0;
+			}
+			else if (dealer_value == 21) { //dealer blackjacks
+				System.out.println("dealer blackjacks, dealer wins");
+				player.balance -= player.bet;
+				}
+			else if (pval == 21) { //player blackjacks
+				System.out.println("player blackjacks, " + player.name + " wins");
+				player.balance += player.bet;
+				player.bet = 0;
+				}
+			else { 
+				if (dealer_value > 21) { //dealer busts
+					System.out.println("dealer busts, " + player.name + " wins");
+					player.balance += player.bet;
+					player.bet = 0;
+					}
+				else if (pval > dealer_value && pval <= 21) {
+					System.out.println("player is higher than dealer, " + player.name + " wins");
+					player.balance += player.bet;
+					player.bet = 0;
+					}
+				else {
+					System.out.println("dealer is higher than player, dealer wins.");
+					player.balance -= player.bet;
+					}
+				}
+			}
 		
 		SQL sql = new SQL();
 		sql.NewUser("Daniel", "123", 500);
