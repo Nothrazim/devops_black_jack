@@ -5,8 +5,8 @@ public class Player {
 	
 	int hand_value;
 	double balance;
-	String name;
 	double bet;
+	String name;
 	Deck Deck;
 	ArrayList<Card> hand = new ArrayList<Card>();
 	

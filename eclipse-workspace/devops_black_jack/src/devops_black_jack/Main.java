@@ -32,12 +32,10 @@ public class Main {
 			player.setBet(player_bet);
 			}
 
-		//dealer draws first card.
 		theDealer.draw_first_card();
 		
-		//
-		//Player(s): Initial card draw
-				
+		
+		//Player(s): Initial card draw		
 		for (Player player: player_list) {
 			player.drawcard();
 			player.drawcard();
@@ -47,9 +45,7 @@ public class Main {
 		
 		System.out.println("\n");
 		
-		//
 		//Player(s): Choose hit/stand/double/split
-		//
 		for (Player player: player_list) {
 			System.out.println(player.getName() + ", your hand contains:");
 			player.getHand();
@@ -67,10 +63,8 @@ public class Main {
 		
 		//dealer draws remaining cards until threshold of 17
 		theDealer.draw_more();
-		//
-		//Player(s): Loop through player list and compare vs dealer_hand
-		//
 		
+		//Loop through player list and compare vs dealer_hand
 		theDealer.deduce_winner(player_list);
 		
 		SQL sql = new SQL();
