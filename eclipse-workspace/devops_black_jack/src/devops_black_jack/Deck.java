@@ -60,8 +60,8 @@ public class Deck {
 	}
 	
 	Card draw_card() {
-		Card card = this.deck.get(0);
-		this.deck.remove(0);
+		Card card = Deck.deck.get(0);
+		Deck.deck.remove(0);
 		return card;
 	}
 	
