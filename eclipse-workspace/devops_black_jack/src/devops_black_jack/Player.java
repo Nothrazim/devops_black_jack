@@ -11,7 +11,7 @@ public class Player {
 	
 	
 	
-	public int checkBalance() {
+	public float checkBalance() {
 		
 		return balance;
 	}
