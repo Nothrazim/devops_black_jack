@@ -1,4 +1,4 @@
-package black_jack;
+package devops_black_jack;
 import java.util.Scanner;
 
 public class Main {
