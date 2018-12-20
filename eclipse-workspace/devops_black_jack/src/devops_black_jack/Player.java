@@ -1,94 +1,59 @@
 package devops_black_jack;
-import java.util.ArrayList;
 
 public class Player {
-	
-	int hand_value;
-	double balance;
-	double bet;
+	int pott;
+	int balance;
 	String name;
-	Deck Deck;
-	ArrayList<Card> hand = new ArrayList<Card>();
+	int hand_value;
+	int bet;
 	
-	public Player(String name, double balance){
-		this.balance = balance;
-		this.name = name;
-		Deck = new Deck();
-	}
 	
-	void chooseAction(String choice) {
-		if (choice.equals("Hit")) {
-			Hit();
-		}
-		else if (choice.equals("Stand")) {
-			Stand();
-		}
-		else if (choice.equals("Double")) {
-			Doubledown();
-		}
-		if (choice.equals("Split")) {
-			Split();
-		}
+	public Player(String name, int balance){
+		System.out.println("Welcome " + name + ", you have " + balance +" to play for");
 	}
 	
-	void Hit() {
-		System.out.println("Hit!");
-	}
-
-	void Stand() {
-		System.out.println("Stand!");
-	}
 	
-	String Doubledown() {
-		if(balance>=bet*2) {
-			bet = bet*2;
-			return "You have doubled down";
-		}
-			
-		else
-			return "You dont have enough credits";
-	}
-
-	void Split() {
-		System.out.println("Split!");
-	}	
 	
-	void drawcard() {
-		Card card = Deck.draw_card();
-		hand.add(card);
-	}
-	
-	public void updateBalance(double difference) {
-		balance = balance+difference;
-	}
-
-	public double getBalance() {
+	public int checkBalance() {
+		
 		return balance;
 	}
 	
-	public void setBet(double bet) {
-		this.bet = bet;	
+	void playerHand() {
+		
+		
 	}
 	
-	public double getBet() {
-		return bet;
+		
+
+
+
+	public String getName() {
+		
+		return name;
+	}
+
+
+
+	public void chooseAction(String choice) {
+		//hit stand double split
+		
+		
 	}
 	
 	public int setHandValue() {
-		for (Card card: this.hand) {
-			this.hand_value += card.value;
-			}
-		return hand_value;
-	}
+        for (Card card: this.hand) {
+            this.hand_value += card.value;
+            }
+        return hand_value;
+    }
 
-	public void getHand() {
-		for (Card card: this.hand) {
-			System.out.println(card.name);
-			}
-		}	
-	
-	public String getName() {
-		return name;
+
+
+	public int getBet() {
+		// TODO Auto-generated method stub
+		return bet;
 	}
 	
+	//end
 }
