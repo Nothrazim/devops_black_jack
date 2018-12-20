@@ -28,6 +28,9 @@ public class SQL {
 	}
 	//RETURNS TRUE IS SUCCESSFUL, FALSE IF NOT	
 	public boolean NewUser(String username, String password, double balance) {
+		if (this.Login(username, password))  // Try logging in before creating new user
+			return true;
+		else {
 		try {
 			PreparedStatement s = connect.prepareStatement("insert into account values(default, ?, ?, ?)");
 			s.setString(1, username);
@@ -37,7 +40,7 @@ public class SQL {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		}}
 		return true;
 	}
 	//RETURNS TRUE IF SUCCESSFUL, FALSE IF NOT
