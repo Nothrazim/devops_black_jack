@@ -14,90 +14,95 @@ public class Main {
 		Dealer theDealer = new Dealer();
 		String[] player_choices = {"Hit", "Stand", "Double", "Split"};
 		
-		Deck.create_deck();
-	
-		player_list.add(player1);
-		player_list.add(player2);
-
-		System.out.println("How many decks do you want to use?");	
-		int deck_selection=scanner.nextInt();
-		Deck.add_decks(deck_selection);
+		boolean game_running = true;
+		while(game_running) {
+			Deck.create_deck();
 		
-		Deck.shuffle_deck();
+			player_list.add(player1);
+			player_list.add(player2);
 		
-		//place bets
-		for (Player player: player_list) {
-			System.out.println(player.getName() + ", what will you bet?");
-			int player_bet=scanner.nextInt();
-			player.setBet(player_bet);
-			}
-
-		theDealer.draw_first_card();
-		
-		
-		//Player(s): Initial card draw		
-		for (Player player: player_list) {
-			player.drawcard();
-			player.drawcard();
-			System.out.println(player.getName() + " has drawn;");
-			player.printHand();
-			}
-		
-		System.out.println("\n");
-		
-		//Player(s): Choose hit/stand/double/split
-		for (Player player: player_list) {
+			System.out.println("How many decks do you want to use?");
 			while(true) {
-				System.out.println(player.getName() + ", your hand contains:");
-				player.printHand();
-				player.setHandValue();
-				System.out.println("Total value of hand: "+player.getHand_Value());
-				System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
-				if (player.balance >= player.bet * 2) {
-					System.out.println(player_choices[2]);
-				}
-				if (player.hand.get(0).value == player.hand.get(1).value) {
-					System.out.println(player_choices[3]);
-				}
-				
-				String choice = scanner.next().toLowerCase();
-				if(choice.equals("stand"))
+				String str_deck_selection=scanner.nextLine();
+				try {
+					int deck_selection = Integer.parseInt(str_deck_selection);
+					Deck.add_decks(deck_selection);
 					break;
-				else if(choice.equals("hit")) {
-					player.drawcard();
-					player.setHandValue();
-					if(player.getHand_Value()>21) {
-						System.out.println(player.getName() + ", your hand contains:");
-						player.printHand();
-						System.out.println("Total value of hand: "+player.getHand_Value());
-						System.out.println("Bust!");
+				}
+				catch(Exception e) {
+					System.out.println("Please enter the number of decks you wish to play with");
+				}
+			}
+			
+			Deck.shuffle_deck();
+			
+			//place bets
+			for (Player player: player_list) {
+				System.out.println(player.getName() + ", what will you bet?");
+				while(true) {
+					String str_player_bet=scanner.nextLine();
+					try {
+						double player_bet = Double.parseDouble(str_player_bet);
+						if(player.getBalance() < player_bet) {
+							System.out.println("You dont have that many credits, you have "+player.getBalance());
+							continue;
+						}
+						player.setBet(player_bet);
 						break;
 					}
+					catch(Exception e) {
+						System.out.println("Please enter a bet, you have "+player.getBalance()+" credits");
+					}
 				}
-				else if(choice.equals("double")) {
-					player.setBet(player.getBet()*2);
-					player.drawcard();
-					player.setHandValue();
+			}
+		
+			theDealer.draw_first_card();
+			
+			
+			//Player(s): Initial card draw		
+			for (Player player: player_list) {
+				player.drawcard();
+				player.drawcard();
+				System.out.println(player.getName() + " has drawn;");
+				player.printHand();
+				}
+			
+			
+			//Player(s): Choose hit/stand/double/split
+			for (Player player: player_list) {
+				boolean playing = true;
+				while(playing) {
 					System.out.println(player.getName() + ", your hand contains:");
 					player.printHand();
+					player.setHandValue();
 					System.out.println("Total value of hand: "+player.getHand_Value());
-					if(player.getHand_Value() > 21)
-						System.out.println("Bust!");
-					break;
+					System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
+					if (player.balance >= player.bet * 2) {
+						System.out.println(player_choices[2]);
+					}
+					if (player.hand.get(0).value == player.hand.get(1).value) {
+						System.out.println(player_choices[3]);
+					}
 					
+					String choice = scanner.nextLine().toLowerCase();
+					if(choice.contains("stand") || choice.contains("hit") || choice.contains("double") || choice.contains("split"))
+						playing = player.chooseAction(choice);
+					else {
+						System.out.println("\nPlease enter a valid action");
+						continue;
+					}
 				}
-				//player.chooseAction(choice); //results will be handled in Player methods
-				System.out.println(player.getHand_Value());
 			}
+		
+			
+			//dealer draws remaining cards until threshold of 17
+			theDealer.draw_more();
+			
+			//Loop through player list and compare vs dealer_hand
+			theDealer.deduce_winner(player_list);
+			
+			System.out.println("\nNext game!");
 		}
-
-		
-		//dealer draws remaining cards until threshold of 17
-		theDealer.draw_more();
-		
-		//Loop through player list and compare vs dealer_hand
-		theDealer.deduce_winner(player_list);
-		
 		SQL sql = new SQL();
 		sql.NewUser("Daniel", "123", 500);
 		System.out.println(sql.Login("Daniel", "123"));

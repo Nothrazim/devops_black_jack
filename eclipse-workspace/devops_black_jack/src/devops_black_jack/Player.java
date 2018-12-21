@@ -17,41 +17,61 @@ public class Player {
 		Deck = new Deck();
 	}
 	
-	void chooseAction(String choice) {
-		if (choice.equals("Hit")) {
-			Hit();
+	boolean chooseAction(String choice) {
+		if (choice.equals("hit")) {
+			boolean returnvalue = Hit();
+			return returnvalue;
 		}
-		else if (choice.equals("Stand")) {
-			Stand();
+		else if (choice.equals("stand")) {
+			boolean returnvalue = Stand();
+			return returnvalue;
 		}
-		else if (choice.equals("Double")) {
-			Doubledown();
+		else if (choice.equals("double")) {
+			boolean returnvalue = Doubledown();
+			return returnvalue;
 		}
-		if (choice.equals("Split")) {
-			Split();
+		else if (choice.equals("split")) {
+			boolean returnvalue = Split();
+			return returnvalue;
 		}
+		return true;
 	}
 	
-	void Hit() {
-		System.out.println("Hit!");
+	boolean Hit() {
+		System.out.println("\nHit!");
+		this.drawcard();
+		this.setHandValue();
+		if(this.getHand_Value()>21) {
+			System.out.println(this.getName() + ", your hand contains:");
+			this.printHand();
+			System.out.println("Total value of hand: "+this.getHand_Value());
+			System.out.println("Bust!");
+			return false;
+	}
+		return true;
 	}
 
-	void Stand() {
-		System.out.println("Stand!");
+	boolean Stand() {
+		System.out.println("\nStand!");
+		return false;
 	}
 	
-	String Doubledown() {
-		if(balance>=bet*2) {
-			bet = bet*2;
-			return "You have doubled down";
-		}
-			
-		else
-			return "You dont have enough credits";
+	boolean Doubledown() {
+		System.out.println("\nDoubling down!");
+		this.setBet(this.getBet()*2);
+		this.drawcard();
+		this.setHandValue();
+		System.out.println(this.getName() + ", your hand contains:");
+		this.printHand();
+		System.out.println("Total value of hand: "+this.getHand_Value());
+		if(this.getHand_Value() > 21)
+			System.out.println("Bust!");
+		return false;
 	}
 
-	void Split() {
-		System.out.println("Split!");
+	boolean Split() {
+		System.out.println("\nSplit!");
+		return false;
 	}	
 	
 	void drawcard() {
@@ -98,6 +118,7 @@ public class Player {
 		for (Card card: this.hand) {
 			System.out.println(card.name);
 			}
+		System.out.println("");
 		}	
 	
 	public String getName() {
