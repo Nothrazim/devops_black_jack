@@ -67,6 +67,9 @@ public class Main {
 					player.drawcard();
 					player.setHandValue();
 					if(player.getHand_Value()>21) {
+						System.out.println(player.getName() + ", your hand contains:");
+						player.printHand();
+						System.out.println("Total value of hand: "+player.getHand_Value());
 						System.out.println("Bust!");
 						break;
 					}
