@@ -40,25 +40,53 @@ public class Main {
 			player.drawcard();
 			player.drawcard();
 			System.out.println(player.getName() + " has drawn;");
-			player.getHand();
+			player.printHand();
 			}
 		
 		System.out.println("\n");
 		
 		//Player(s): Choose hit/stand/double/split
 		for (Player player: player_list) {
-			System.out.println(player.getName() + ", your hand contains:");
-			player.getHand();
-			System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
-			if (player.balance >= player.bet * 2) {
-				System.out.println(player_choices[2]);
+			while(true) {
+				System.out.println(player.getName() + ", your hand contains:");
+				player.printHand();
+				player.setHandValue();
+				System.out.println("Total value of hand: "+player.getHand_Value());
+				System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
+				if (player.balance >= player.bet * 2) {
+					System.out.println(player_choices[2]);
+				}
+				if (player.hand.get(0).value == player.hand.get(1).value) {
+					System.out.println(player_choices[3]);
+				}
+				
+				String choice = scanner.next().toLowerCase();
+				if(choice.equals("stand"))
+					break;
+				else if(choice.equals("hit")) {
+					player.drawcard();
+					player.setHandValue();
+					if(player.getHand_Value()>21) {
+						System.out.println("Bust!");
+						break;
+					}
+				}
+				else if(choice.equals("double")) {
+					player.setBet(player.getBet()*2);
+					player.drawcard();
+					player.setHandValue();
+					System.out.println(player.getName() + ", your hand contains:");
+					player.printHand();
+					System.out.println("Total value of hand: "+player.getHand_Value());
+					if(player.getHand_Value() > 21)
+						System.out.println("Bust!");
+					break;
+					
+				}
+				//player.chooseAction(choice); //results will be handled in Player methods
+				System.out.println(player.getHand_Value());
 			}
-			if (player.hand.get(0).value == player.hand.get(1).value) {
-				System.out.println(player_choices[3]);
-			}
-			String choice = scanner.next();
-			player.chooseAction(choice); //results will be handled in Player methods
-			}
+		}
 
 		
 		//dealer draws remaining cards until threshold of 17

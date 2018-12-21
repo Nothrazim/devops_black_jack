@@ -30,6 +30,19 @@ public class Dealer {
 				hand.add(dealer_card);
 				System.out.println("House drew: " + dealer_card.getName());
 				hand_value += dealer_card.value;
+				if(this.hand_value > 21) {
+					for(Card card: hand) {
+						if(card.getValue() == 11) {
+							card.setAceToValueOne();
+							break;
+						}
+					}
+					hand_value = 0;
+					for(Card card: hand) {
+						hand_value += card.getValue();
+					}
+				}
+					
 				System.out.println("House value is: " + hand_value);
 				}
 			}
@@ -42,7 +55,7 @@ public class Dealer {
 	
 	void deduce_winner(ArrayList<Player> player_list) {
 		for (Player player: player_list) {
-			int pval = player.setHandValue();
+			int pval = player.getHand_Value();
 			int dval = hand_value;
 			System.out.println(player.name + " pval: " + pval + ", dealer val: " + dval);
 			if (hand_value == 21 && pval == 21) { //double blackjack

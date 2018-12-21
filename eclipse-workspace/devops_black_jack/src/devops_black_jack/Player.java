@@ -1,59 +1,111 @@
+
 package devops_black_jack;
+import java.util.ArrayList;
 
 public class Player {
-	int pott;
-	int balance;
-	String name;
+	
 	int hand_value;
-	int bet;
+	double balance;
+	double bet;
+	String name;
+	Deck Deck;
+	ArrayList<Card> hand = new ArrayList<Card>();
 	
-	
-	public Player(String name, int balance){
-		System.out.println("Welcome " + name + ", you have " + balance +" to play for");
+	public Player(String name, double balance){
+		this.balance = balance;
+		this.name = name;
+		Deck = new Deck();
 	}
 	
+	void chooseAction(String choice) {
+		if (choice.equals("Hit")) {
+			Hit();
+		}
+		else if (choice.equals("Stand")) {
+			Stand();
+		}
+		else if (choice.equals("Double")) {
+			Doubledown();
+		}
+		if (choice.equals("Split")) {
+			Split();
+		}
+	}
 	
+	void Hit() {
+		System.out.println("Hit!");
+	}
+
+	void Stand() {
+		System.out.println("Stand!");
+	}
 	
-	public int checkBalance() {
-		
+	String Doubledown() {
+		if(balance>=bet*2) {
+			bet = bet*2;
+			return "You have doubled down";
+		}
+			
+		else
+			return "You dont have enough credits";
+	}
+
+	void Split() {
+		System.out.println("Split!");
+	}	
+	
+	void drawcard() {
+		Card card = Deck.draw_card();
+		hand.add(card);
+	}
+	
+	public void updateBalance(double difference) {
+		balance = balance+difference;
+	}
+
+	public double getBalance() {
 		return balance;
 	}
 	
-	void playerHand() {
-		
-		
+	public void setBet(double bet) {
+		this.bet = bet;	
 	}
 	
-		
-
-
-
-	public String getName() {
-		
-		return name;
-	}
-
-
-
-	public void chooseAction(String choice) {
-		//hit stand double split
-		
-		
-	}
-	
-	public int setHandValue() {
-        for (Card card: this.hand) {
-            this.hand_value += card.value;
-            }
-        return hand_value;
-    }
-
-
-
-	public int getBet() {
-		// TODO Auto-generated method stub
+	public double getBet() {
 		return bet;
 	}
 	
-	//end
+	public void setHandValue() {
+		this.hand_value = 0;
+		for (Card card: this.hand) {
+			this.hand_value += card.value;
+			}
+		if(this.hand_value > 21) {
+			for(Card card: this.hand) {
+				if(card.getValue() == 11) {
+					card.setAceToValueOne();
+					break;
+				}
+			}
+		}
+		this.hand_value = 0;
+		for (Card card: this.hand) {
+			this.hand_value += card.value;
+			}
+	}
+
+	public void printHand() {
+		for (Card card: this.hand) {
+			System.out.println(card.name);
+			}
+		}	
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getHand_Value() {
+		return this.hand_value;
+	}
+	
 }

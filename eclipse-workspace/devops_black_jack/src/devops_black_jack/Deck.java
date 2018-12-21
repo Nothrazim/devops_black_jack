@@ -13,7 +13,7 @@ public class Deck {
 		for(int suit = 0; suit < suites.length; suit++) {
 			for(int n = 1; n < 14; n++) {
 				if (n == 1) {
-					deck.add(new Card("Ace of " + suites[suit], 1));
+					deck.add(new Card("Ace of " + suites[suit], 11));
 					}
 				else if (n == 11) {
 					deck.add(new Card("Jack of " + suites[suit], 10));

@@ -17,4 +17,8 @@ public class Card {
 		return value;
 	}
 	
+	public void setAceToValueOne() {
+		value = 1;
+	}
+	
 }
