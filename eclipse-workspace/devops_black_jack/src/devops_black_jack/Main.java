@@ -37,8 +37,8 @@ public class Main {
 		
 		//Player(s): Initial card draw		
 		for (Player player: player_list) {
-			player.drawcard();
-			player.drawcard();
+			player.draw_card();
+			player.draw_card();
 			System.out.println(player.getName() + " has drawn;");
 			player.getHand();
 			}
