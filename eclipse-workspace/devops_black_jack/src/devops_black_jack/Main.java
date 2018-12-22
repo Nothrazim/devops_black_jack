@@ -74,6 +74,7 @@ public class Main {
 				boolean playing = true;
 				boolean doubledown = false;
 				boolean split = false;
+				boolean splitskip = false;
 				while(playing) {
 					System.out.println(player.getName() + ", your hand contains:");
 					player.printHand();
@@ -84,13 +85,12 @@ public class Main {
 						System.out.println(player_choices[2]);
 						doubledown = true;
 					}
-					//split logic is broken
-					//lets you split on any two 10 value cards
-					//like a 10 and a king
-					if (player.hand.get(0).value == player.hand.get(1).value) {
+					if (player.hand.get(0).name.substring(0, 3).equals(player.hand.get(1).name.substring(0, 3)) && !splitskip) {
 						System.out.println(player_choices[3]);
 						split = true;
 					}
+					else
+						splitskip = true;
 					
 					String choice = scanner.nextLine().toLowerCase();
 					if(choice.equals("stand") || choice.equals("hit") || (choice.equals("double") && doubledown) || (choice.equals("split") && split))
