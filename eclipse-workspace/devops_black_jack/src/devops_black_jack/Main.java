@@ -12,7 +12,7 @@ public class Main {
 		Player player2 = new Player("Bob", 4);
 		Deck Deck = new Deck();
 		Dealer theDealer = new Dealer();
-		String[] player_choices = {"Hit", "Stand", "Double", "Split"};
+		String[] player_choices = {"Hit", "Stand", "Double", "Split"};  //This one is not to be used if we want to present only the giving choices according to if the player even has the right given cards to double.
 		
 		boolean game_running = true;
 		while(game_running) {
