@@ -15,6 +15,8 @@ public class Main {
 		Player player1 = new Player(logininfo[0], sql.getBalance(logininfo[0], logininfo[1]));
 		Deck Deck = new Deck();
 		Dealer theDealer = new Dealer();
+		String[] player_choices = {"Hit", "Stand", "Double", "Split"};
+
 		
 
 		player_list.add(player1);
