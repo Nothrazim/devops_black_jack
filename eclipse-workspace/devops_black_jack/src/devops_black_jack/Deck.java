@@ -9,7 +9,6 @@ public class Deck {
 	
 	
 	void create_deck(){
-		int y = 0; //counter to run through all cards created for print statements
 		for(int suit = 0; suit < suites.length; suit++) {
 			for(int n = 1; n < 14; n++) {
 				if (n == 1) {
@@ -27,7 +26,6 @@ public class Deck {
 				else {
 					deck.add(new Card(n + " of " + suites[suit], n));
 					}
-				y += 1;
 				}
 			}
 		}
@@ -59,6 +57,10 @@ public class Deck {
 		Card card = deck.get(0);
 		deck.remove(0);
 		return card;
+	}
+	
+	public void clear_deck() {
+		deck.clear();
 	}
 	
 }

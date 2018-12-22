@@ -16,6 +16,7 @@ public class Main {
 		
 		boolean game_running = true;
 		while(game_running) {
+			Deck.clear_deck();
 			Deck.create_deck();
 		
 			player_list.add(player1);
@@ -71,6 +72,8 @@ public class Main {
 			//Player(s): Choose hit/stand/double/split
 			for (Player player: player_list) {
 				boolean playing = true;
+				boolean doubledown = false;
+				boolean split = false;
 				while(playing) {
 					System.out.println(player.getName() + ", your hand contains:");
 					player.printHand();
@@ -79,13 +82,18 @@ public class Main {
 					System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
 					if (player.balance >= player.bet * 2) {
 						System.out.println(player_choices[2]);
+						doubledown = true;
 					}
+					//split logic is broken
+					//lets you split on any two 10 value cards
+					//like a 10 and a king
 					if (player.hand.get(0).value == player.hand.get(1).value) {
 						System.out.println(player_choices[3]);
+						split = true;
 					}
 					
 					String choice = scanner.nextLine().toLowerCase();
-					if(choice.contains("stand") || choice.contains("hit") || choice.contains("double") || choice.contains("split"))
+					if(choice.equals("stand") || choice.equals("hit") || (choice.equals("double") && doubledown) || (choice.equals("split") && split))
 						playing = player.chooseAction(choice);
 					else {
 						System.out.println("\nPlease enter a valid action");

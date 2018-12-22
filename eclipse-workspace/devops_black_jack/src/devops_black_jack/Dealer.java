@@ -46,11 +46,12 @@ public class Dealer {
 				System.out.println("House value is: " + hand_value);
 				}
 			}
-
-		System.out.println("\ndealer final value: " + hand_value);
+		System.out.println("Dealers final hand:");
 		for (Card object: hand) {
-			    System.out.println("The house's final draw: "+object.name);
-			    }	
+		    System.out.println(object.name);
+		    }
+		System.out.println("Dealers final value is " + hand_value);
+	
 	}
 	
 	void deduce_winner(ArrayList<Player> player_list) {

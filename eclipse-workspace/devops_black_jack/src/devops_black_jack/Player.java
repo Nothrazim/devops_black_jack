@@ -18,23 +18,23 @@ public class Player {
 	}
 	
 	boolean chooseAction(String choice) {
-		if (choice.equals("hit")) {
-			boolean returnvalue = Hit();
+		boolean returnvalue;
+		switch (choice) {
+		case "hit":
+			returnvalue = Hit();
 			return returnvalue;
-		}
-		else if (choice.equals("stand")) {
-			boolean returnvalue = Stand();
+		case "stand":
+			returnvalue = Stand();
 			return returnvalue;
-		}
-		else if (choice.equals("double")) {
-			boolean returnvalue = Doubledown();
+		case "double":
+			returnvalue = Doubledown();
 			return returnvalue;
-		}
-		else if (choice.equals("split")) {
-			boolean returnvalue = Split();
+		case "split":
+			returnvalue = Split();
 			return returnvalue;
+		default:
+			return true;
 		}
-		return true;
 	}
 	
 	boolean Hit() {
@@ -45,7 +45,7 @@ public class Player {
 			System.out.println(this.getName() + ", your hand contains:");
 			this.printHand();
 			System.out.println("Total value of hand: "+this.getHand_Value());
-			System.out.println("Bust!");
+			System.out.println("Bust!\n");
 			return false;
 	}
 		return true;
@@ -65,7 +65,7 @@ public class Player {
 		this.printHand();
 		System.out.println("Total value of hand: "+this.getHand_Value());
 		if(this.getHand_Value() > 21)
-			System.out.println("Bust!");
+			System.out.println("Bust!\n");
 		return false;
 	}
 
@@ -116,7 +116,7 @@ public class Player {
 
 	public void printHand() {
 		for (Card card: this.hand) {
-			System.out.println(card.name);
+			System.out.println("	"+card.name);
 			}
 		System.out.println("");
 		}	
