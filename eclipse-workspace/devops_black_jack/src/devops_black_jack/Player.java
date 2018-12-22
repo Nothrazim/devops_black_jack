@@ -129,4 +129,8 @@ public class Player {
 		return this.hand_value;
 	}
 	
+	public void resetHand() {
+		this.hand.clear();
+	}
+	
 }

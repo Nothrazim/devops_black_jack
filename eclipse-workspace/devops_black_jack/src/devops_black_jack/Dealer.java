@@ -8,6 +8,7 @@ public class Dealer {
 	SQL sql;
 	public Dealer() {
 		Deck = new Deck();
+		sql = new SQL();
 	}
 		
 	//dealer draws first card.
@@ -86,8 +87,9 @@ public class Dealer {
 					}
 				}
 			player.bet = 0;
+			player.resetHand();
 			//for when we use proper logins, updates database balance after every game
-			//sql.setBalance(player.getName(), player.getBalance());
+			sql.setBalance(player.getName(), player.getBalance());
 			}
 		
 	}

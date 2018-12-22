@@ -3,6 +3,8 @@ package devops_black_jack;
 import java.util.*;
 
 public class Deck {
+	
+	
 	static String[] suites = {"Hearts", "Spades", "Diamonds", "Clubs"};
 	
 	static ArrayList<Card> deck = new ArrayList<Card>();
