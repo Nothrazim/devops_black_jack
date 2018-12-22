@@ -5,6 +5,7 @@ public class Dealer {
 	int hand_value = 0;
 	ArrayList<Card> hand = new ArrayList<Card>();
 	Deck Deck;
+	SQL sql;
 	public Dealer() {
 		Deck = new Deck();
 	}
@@ -85,6 +86,8 @@ public class Dealer {
 					}
 				}
 			player.bet = 0;
+			//for when we use proper logins, updates database balance after every game
+			//sql.setBalance(player.getName(), player.getBalance());
 			}
 		
 	}
