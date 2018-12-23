@@ -34,7 +34,7 @@ public class Main {
 		boolean menuing = true;
 		while(menuing) {
 			System.out.println("What would you like to do?");
-			System.out.println("[Add] player\n[Play] blackjack\n[Change] deck");
+			System.out.println("[Add] player\n[Play] blackjack\n[Change] deck\n[Rules]");
 			String menuchoice = scanner.nextLine().toLowerCase();
 			switch (menuchoice) {
 			case "add":
@@ -51,7 +51,9 @@ public class Main {
 				game.deckChoices(Deck, player_list, scanner);
 				menuing = false;
 				break;
-	
+			case "rules":
+				//print rules
+				break;
 			default:
 				System.out.println("Please enter a valid option");
 				continue;
@@ -118,31 +120,46 @@ public class Main {
 			
 			
 			//Player(s): Choose hit/stand/double/split
-			for (Player player: player_list) {
+			//needs to be changed to index instead of foreach, split needs to decrease iterator by 1
+			//so the player can play both the split hand and the original hand
+			//throws ConcurrentModificationException on second hand after split, thats bad
+			//doesnt throw ConcurrentModificationException on non foreach loop
+			//PROPER PRINTS WILL NEED TO BE HANDLED
+			//FOR NOW IT JUST PRINTS THE PLAYERS NAME TWICE FOR TWO HANDS
+			//PROPER BALANCE CHECKING NEEDS TO BE DONE TOO, AS IT STANDS THE HANDS HAVE INDIVIDUAL BALANCES, VERY BAD
+			boolean split = false;
+			for (int i = 0; i < player_list.size(); i++) {
+				if(split)
+					i--;
 				boolean playing = true;
 				boolean doubledown = false;
-				boolean split = false;
+				split = false;
 				boolean splitskip = false;
 				while(playing) {
-					System.out.println(player.getName() + ", your hand contains:");
-					player.printHand();
-					player.setHandValue();
-					System.out.println("Total value of hand: "+player.getHand_Value());
+					split = false;
+					System.out.println(player_list.get(i).getName() + ", your hand contains:");
+					player_list.get(i).printHand();
+					player_list.get(i).setHandValue();
+					System.out.println("Total value of hand: "+player_list.get(i).getHand_Value());
 					System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
-					if (player.balance >= player.bet * 2) {
+					if (player_list.get(i).balance >= player_list.get(i).bet * 2) {
 						System.out.println(player_choices[2]);
 						doubledown = true;
 					}
-					if (!splitskip && player.hand.get(0).name.substring(0, 3).equals(player.hand.get(1).name.substring(0, 3))) {
+					if (player_list.get(i).hand.size() > 1 && !splitskip && player_list.get(i).hand.get(0).name.substring(0, 3).equals(player_list.get(i).hand.get(1).name.substring(0, 3))) {
 						System.out.println(player_choices[3]);
+						//the idea is to create a new player instance with the same name, balance and bet on split
+						//insert the new player object at the index of the first player objects name +1 to get the "hands" in correct order
+						//remove the split card from first player object hand and add to "second" player objects hand
+						//IT ACTUALLY WORKS NOW, LEAVING THIS COMMENT IN CASE SOMEONE WANTS A QUICK OVERVIEW
 						split = true;
 					}
-					else
-						splitskip = true;
 					
 					String choice = scanner.nextLine().toLowerCase();
-					if(choice.equals("stand") || choice.equals("hit") || (choice.equals("double") && doubledown) || (choice.equals("split") && split))
-						playing = player.chooseAction(choice);
+					if(choice.equals("stand") || choice.equals("hit") || (choice.equals("double") && doubledown) || (choice.equals("split") && split)) {
+						playing = player_list.get(i).chooseAction(choice, player_list);
+						System.out.println(player_list.toString());
+					}
 					else {
 						System.out.println("\nPlease enter a valid action");
 						continue;
@@ -186,10 +203,10 @@ public class Main {
 	private String [] LoginOrRegister(Scanner scanner, SQL sql) {
 		while(true) {
 			System.out.println("Do you want to login or register?");
-			String logreg = scanner.nextLine();
-			System.out.println("Enter Username\n>> ");
+			String logreg = scanner.nextLine().toLowerCase();
+			System.out.print("Enter Username\n>> ");
 			String username = scanner.nextLine();
-			System.out.println("Enter Password\n>> ");
+			System.out.print("Enter Password\n>> ");
 			String password = scanner.nextLine();
 			switch (logreg) {
 			case "login":
@@ -211,7 +228,7 @@ public class Main {
 					continue;
 				}
 			default:
-				System.out.println("Please enter a login or register");
+				System.out.println("Please enter login or register");
 				continue;
 			}
 		}

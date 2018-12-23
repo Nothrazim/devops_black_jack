@@ -17,7 +17,7 @@ public class Player {
 		Deck = new Deck();
 	}
 	
-	boolean chooseAction(String choice) {
+	boolean chooseAction(String choice, ArrayList<Player> player_list) {
 		boolean returnvalue;
 		switch (choice) {
 		case "hit":
@@ -30,7 +30,7 @@ public class Player {
 			returnvalue = Doubledown();
 			return returnvalue;
 		case "split":
-			returnvalue = Split();
+			returnvalue = Split(player_list);
 			return returnvalue;
 		default:
 			return true;
@@ -69,8 +69,32 @@ public class Player {
 		return false;
 	}
 
-	boolean Split() {
+	boolean Split(ArrayList<Player> player_list) {
 		System.out.println("\nSplit!");
+		//test
+		int indexcount = 0;
+		for(Player player:player_list) {
+			if(player.getName().equals(this.getName()))
+					indexcount++;
+			
+		}
+		for(int i = 0; i < player_list.size(); i++) {
+			if(player_list.get(i).getName().equals(this.getName())) {
+				player_list.add(i+indexcount, new Player(this.getName(), this.getBalance()));
+				break;
+			}
+		}
+		
+				
+		for(int i = 0; i < player_list.size(); i++) {
+			if(player_list.get(i).getName().equals(this.getName())) {
+				player_list.get(i+indexcount).setBet(this.getBet());
+				player_list.get(i+indexcount).hand.add(this.hand.get(this.hand.size()-1));
+				this.hand.remove(this.hand.size()-1);
+				return true;
+			}
+		}
+		//test
 		return false;
 	}	
 	
