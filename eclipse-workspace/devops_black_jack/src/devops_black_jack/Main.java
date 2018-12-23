@@ -173,6 +173,13 @@ public class Main {
 			
 			//Loop through player list and compare vs dealer_hand
 			theDealer.deduce_winner(player_list);
+			
+			//removes extra hands from playerlist
+			for(int i = 0; i < player_list.size(); i++) {
+				if(player_list.get(i).isExtraHand())
+					player_list.remove(i);
+			}
+			
 			boolean endmenu = true;
 			while(endmenu) {
 				System.out.println("[Play] again\n[Return] to menu");

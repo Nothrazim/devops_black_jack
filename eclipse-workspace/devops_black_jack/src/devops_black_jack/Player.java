@@ -9,6 +9,8 @@ public class Player {
 	double bet;
 	String name;
 	Deck Deck;
+	boolean extraHand = false;
+	
 	ArrayList<Card> hand = new ArrayList<Card>();
 	
 	public Player(String name, double balance){
@@ -91,6 +93,7 @@ public class Player {
 				player_list.get(i+indexcount).setBet(this.getBet());
 				player_list.get(i+indexcount).hand.add(this.hand.get(this.hand.size()-1));
 				this.hand.remove(this.hand.size()-1);
+				player_list.get(i+indexcount).setExtraHand(true);
 				return true;
 			}
 		}
@@ -155,6 +158,14 @@ public class Player {
 	
 	public void resetHand() {
 		this.hand.clear();
+	}
+	
+	public boolean isExtraHand() {
+		return extraHand;
+	}
+
+	public void setExtraHand(boolean extraHand) {
+		this.extraHand = extraHand;
 	}
 	
 }
