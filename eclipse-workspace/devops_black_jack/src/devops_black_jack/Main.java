@@ -12,14 +12,13 @@ public class Main {
 		String [] logininfo = game.LoginOrRegister(scanner, sql);
 		
 		ArrayList<Player> player_list = new ArrayList<Player>();
-		Player player1 = new Player(logininfo[0], sql.getBalance(logininfo[0], logininfo[1]));
+		Player player = new Player(logininfo[0], sql.getBalance(logininfo[0], logininfo[1]));
 		Deck Deck = new Deck();
 		Dealer theDealer = new Dealer();
-		String[] player_choices = {"Hit", "Stand", "Double", "Split"};
 
 		
 
-		player_list.add(player1);
+		player_list.add(player);
 		System.out.println("Welcome to the game "+logininfo[0]);
 		Deck.create_deck();
 		Deck.shuffle_deck();
@@ -33,14 +32,17 @@ public class Main {
 	private void bigMenu(Scanner scanner, Main game, Deck Deck, ArrayList<Player> player_list, Dealer theDealer, SQL sql) {
 		boolean menuing = true;
 		while(menuing) {
+			boolean canremove = (player_list.size()>1);
 			System.out.println("What would you like to do?");
 			System.out.println("[Add] player\n[Play] blackjack\n[Change] deck\n[Rules]");
+			if(canremove) {
+				System.out.println("[Remove] player");
+			}
+			System.out.println("[Quit]");
 			String menuchoice = scanner.nextLine().toLowerCase();
 			switch (menuchoice) {
 			case "add":
-				//doesnt work, feel free to fix
-				//after login it should add player to player_list
-				game.LoginOrRegister(scanner, sql);
+				game.addPlayer(player_list, scanner, sql);
 				menuing = false;
 				break;
 			case "play":
@@ -51,9 +53,17 @@ public class Main {
 				game.deckChoices(Deck, player_list, scanner);
 				menuing = false;
 				break;
+			case "remove":
+				if(canremove)
+					game.removePlayer(player_list, scanner);
+				else
+					System.out.println("Please enter a valid option");
+				break;
 			case "rules":
 				//print rules
 				break;
+			case "quit":
+				System.exit(0);
 			default:
 				System.out.println("Please enter a valid option");
 				continue;
@@ -211,33 +221,69 @@ public class Main {
 		while(true) {
 			System.out.println("Do you want to login or register?");
 			String logreg = scanner.nextLine().toLowerCase();
-			System.out.print("Enter Username\n>> ");
-			String username = scanner.nextLine();
-			System.out.print("Enter Password\n>> ");
-			String password = scanner.nextLine();
-			switch (logreg) {
-			case "login":
-				if(sql.Login(username, password)) {
-					String [] logininfo = {username, password};
-					return logininfo;
-				}
-				else {
-					System.out.println("Login failed");
+			if(logreg.equals("login") || logreg.equals("register")) {
+				System.out.print("Enter Username\n>> ");
+				String username = scanner.nextLine();
+				System.out.print("Enter Password\n>> ");
+				String password = scanner.nextLine();
+				switch (logreg) {
+				case "login":
+					if(sql.Login(username, password)) {
+						String [] logininfo = {username, password};
+						return logininfo;
+					}
+					else {
+						System.out.println("Login failed");
+						continue;
+					}
+				case "register":
+					if(sql.NewUser(username, password, 500)) {
+						System.out.println("Registering successful");
+						continue;
+					}
+					else {
+						System.out.println("Registering failed");
+						continue;
+					}
+				default:
+					System.out.println("Please enter login or register");
 					continue;
 				}
-			case "register":
-				if(sql.NewUser(username, password, 500)) {
-					System.out.println("Registering successful");
+			}
+				else
 					continue;
-				}
-				else {
-					System.out.println("Registering failed");
-					continue;
-				}
-			default:
-				System.out.println("Please enter login or register");
-				continue;
+		}
+	}
+	
+	
+	private void addPlayer(ArrayList<Player> player_list, Scanner scanner, SQL sql) {
+		String [] addedplayer = this.LoginOrRegister(scanner, sql);
+		Player player = new Player(addedplayer[0], sql.getBalance(addedplayer[0], addedplayer[1]));
+		player_list.add(player);
+		System.out.println("Player "+addedplayer[0]+ " has been added to the game");
+	}
+	
+	private void removePlayer(ArrayList<Player> player_list, Scanner scanner) {
+		boolean removed = false;
+		System.out.println("Which player would you like to remove?\n---------------------\nPlayer List\n---------------------");
+		for(Player player : player_list) {
+			System.out.println(player.getName());
+		}
+		
+		System.out.println("---------------------");
+		String removeplayer = scanner.nextLine();
+		
+		for(Player player : player_list) {
+			if(player.getName().equals(removeplayer)) {
+				player_list.remove(player);
+				removed = true;
+				break;
 			}
 		}
+		
+		if(removed)
+			System.out.println(removeplayer+" has been removed from the game");
+		else
+			System.out.println("No player by the name of "+removeplayer+" is playing in this game");
 	}
 }
