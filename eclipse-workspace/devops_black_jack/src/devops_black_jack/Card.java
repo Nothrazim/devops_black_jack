@@ -21,4 +21,8 @@ public class Card {
 		value = 1;
 	}
 	
+	public void setAceToValueEleven() {
+		value = 11;
+	}
+	
 }

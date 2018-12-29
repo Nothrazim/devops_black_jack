@@ -8,16 +8,16 @@ public class Main {
 		System.out.println("Welcome to the scuffed casino");
 		Scanner scanner=new Scanner(System.in);
 		SQL sql = new SQL();
+		
 		Main game = new Main();
 		String [] logininfo = game.LoginOrRegister(scanner, sql);
 		
 		ArrayList<Player> player_list = new ArrayList<Player>();
-		Player player = new Player(logininfo[0], sql.getBalance(logininfo[0], logininfo[1]));
+		Player player = new Player(logininfo[0],logininfo[1], sql.getBalance(logininfo[0], logininfo[1]));
 		Deck Deck = new Deck();
 		Dealer theDealer = new Dealer();
 
 		
-
 		player_list.add(player);
 		System.out.println("Welcome to the game "+logininfo[0]);
 		Deck.create_deck();
@@ -31,6 +31,7 @@ public class Main {
 	
 	private void bigMenu(Scanner scanner, Main game, Deck Deck, ArrayList<Player> player_list, Dealer theDealer, SQL sql) {
 		boolean menuing = true;
+		System.out.println(sql.getBalance("daniel", "123"));
 		while(menuing) {
 			boolean canremove = (player_list.size()>1);
 			System.out.println("What would you like to do?");
@@ -152,11 +153,11 @@ public class Main {
 					player_list.get(i).setHandValue();
 					System.out.println("Total value of hand: "+player_list.get(i).getHand_Value());
 					System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
-					if (player_list.get(i).balance >= player_list.get(i).bet * 2) {
+					if (player_list.get(i).getBalance() >= player_list.get(i).bet * 2) {
 						System.out.println(player_choices[2]);
 						doubledown = true;
 					}
-					if (player_list.get(i).hand.size() > 1 && !splitskip && player_list.get(i).hand.get(0).name.substring(0, 3).equals(player_list.get(i).hand.get(1).name.substring(0, 3))) {
+					if (player_list.get(i).hand.size() > 1 && !splitskip && player_list.get(i).hand.get(0).name.substring(0, 3).equals(player_list.get(i).hand.get(1).name.substring(0, 3)) && player_list.get(i).getBalance() >= player_list.get(i).getBet()) {
 						System.out.println(player_choices[3]);
 						//the idea is to create a new player instance with the same name, balance and bet on split
 						//insert the new player object at the index of the first player objects name +1 to get the "hands" in correct order
@@ -177,9 +178,14 @@ public class Main {
 				}
 			}
 		
-			
+			for(Player player : player_list) {
+				player.setHandValue();
+				if(player.getHand_Value() <= 21) {
+					theDealer.draw_more();
+					break;
+				}
+			}
 			//dealer draws remaining cards until threshold of 17
-			theDealer.draw_more();
 			
 			//Loop through player list and compare vs dealer_hand
 			theDealer.deduce_winner(player_list);
@@ -258,7 +264,7 @@ public class Main {
 	
 	private void addPlayer(ArrayList<Player> player_list, Scanner scanner, SQL sql) {
 		String [] addedplayer = this.LoginOrRegister(scanner, sql);
-		Player player = new Player(addedplayer[0], sql.getBalance(addedplayer[0], addedplayer[1]));
+		Player player = new Player(addedplayer[0], addedplayer[1], sql.getBalance(addedplayer[0], addedplayer[1]));
 		player_list.add(player);
 		System.out.println("Player "+addedplayer[0]+ " has been added to the game");
 	}

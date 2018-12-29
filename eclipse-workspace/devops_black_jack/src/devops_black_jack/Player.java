@@ -8,15 +8,19 @@ public class Player {
 	double balance;
 	double bet;
 	String name;
+	String password;
 	Deck Deck;
+	SQL sql;
 	boolean extraHand = false;
 	
 	ArrayList<Card> hand = new ArrayList<Card>();
 	
-	public Player(String name, double balance){
+	public Player(String name, String password, double balance){
 		this.balance = balance;
 		this.name = name;
+		this.password = password;
 		Deck = new Deck();
+		sql = new SQL();
 	}
 	
 	boolean chooseAction(String choice, ArrayList<Player> player_list) {
@@ -61,6 +65,7 @@ public class Player {
 	boolean Doubledown() {
 		System.out.println("\nDoubling down!");
 		this.setBet(this.getBet()*2);
+		sql.updateBalance("bet", this.name, this.password, this.getBet());
 		this.drawcard();
 		this.setHandValue();
 		System.out.println(this.getName() + ", your hand contains:");
@@ -82,7 +87,7 @@ public class Player {
 		}
 		for(int i = 0; i < player_list.size(); i++) {
 			if(player_list.get(i).getName().equals(this.getName())) {
-				player_list.add(i+indexcount, new Player(this.getName(), this.getBalance()));
+				player_list.add(i+indexcount, new Player(this.getName(), this.getPassword() ,this.getBalance()));
 				break;
 			}
 		}
@@ -107,14 +112,17 @@ public class Player {
 	}
 	
 	public void updateBalance(double difference) {
+		sql.updateBalance("win", this.name, this.password, difference);
 		balance = balance+difference;
 	}
 
 	public double getBalance() {
+		balance = sql.getBalance(this.name, this.password);
 		return balance;
 	}
 	
 	public void setBet(double bet) {
+		sql.updateBalance("bet", this.name, this.password, bet);
 		this.bet = bet;	
 	}
 	
@@ -138,7 +146,10 @@ public class Player {
 		this.hand_value = 0;
 		for (Card card: this.hand) {
 			this.hand_value += card.value;
-			}
+			if(this.hand.size() == 1) 
+				if(card.value == 1)
+				card.setAceToValueEleven();
+		}
 	}
 
 	public void printHand() {
@@ -150,6 +161,10 @@ public class Player {
 	
 	public String getName() {
 		return name;
+	}
+	
+	private String getPassword() {
+		return this.password;
 	}
 	
 	public int getHand_Value() {

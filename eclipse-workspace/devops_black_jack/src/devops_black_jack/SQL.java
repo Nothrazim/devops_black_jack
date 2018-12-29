@@ -91,4 +91,20 @@ public class SQL {
 		
 	}
 	
+	public boolean updateBalance(String BetOrWin ,String username, String password, double bet) {
+		try {
+			bet = Math.abs(bet);
+			if(BetOrWin.toLowerCase() == "bet")
+				bet = -bet;
+			BigDecimal bdbet = BigDecimal.valueOf(bet);
+			PreparedStatement s = connect.prepareStatement("update account set balance=balance + '"+bdbet+"' where username='"+username+"' and password='"+password+"'");
+			s.executeUpdate();
+			return true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }
