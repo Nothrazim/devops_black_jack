@@ -104,7 +104,8 @@ public class Main {
 				System.out.println(player.name +" your balance is: " + player.getBalance());
 				System.out.println(player.getName() + ", what will you bet?");
 				while(true) {
-					String str_player_bet=scanner.nextLine();
+					//String str_player_bet=scanner.nextLine();
+					String str_player_bet = "1";
 					try {
 						double player_bet = Double.parseDouble(str_player_bet);
 						if(player.getBalance() < player_bet) {
@@ -127,17 +128,10 @@ public class Main {
 			for (Player player: player_list) {
 				player.drawcard();
 				player.drawcard();
-				System.out.println(player.getName() + " has drawn;");
-				player.printHand();
+				if (player_list.size() > 1)
+					player.printHand();
 				}
 			
-			
-			//Player(s): Choose hit/stand/double/split
-			//needs to be changed to index instead of foreach, split needs to decrease iterator by 1
-			//so the player can play both the split hand and the original hand
-			//throws ConcurrentModificationException on second hand after split, thats bad
-			//doesnt throw ConcurrentModificationException on non foreach loop
-			//PROPER PRINTS WILL NEED TO BE HANDLED
 			//FOR NOW IT JUST PRINTS THE PLAYERS NAME TWICE FOR TWO HANDS
 			//PROPER BALANCE CHECKING NEEDS TO BE DONE TOO, AS IT STANDS THE HANDS HAVE INDIVIDUAL BALANCES, VERY BAD
 			boolean split = false;
@@ -147,29 +141,24 @@ public class Main {
 				boolean playing = true;
 				boolean doubledown = false;
 				split = false;
-				boolean splitskip = false;
 				//player_list.get(i).extraHandCounter +
 				while(playing) {
 					split = false;
-					System.out.println(player_list.get(i).getName() +
-							", your" + Player.numberIntToString[player_list.get(i).extraHandCounter] + 
-							" contains:");
 					player_list.get(i).printHand();
 					player_list.get(i).setHandValue();
 					System.out.println("Total value of hand: "+player_list.get(i).getHand_Value());
 					System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
-					if (player_list.get(i).getBalance() >= player_list.get(i).bet * 2) {
+					if (player_list.get(i).getBalance() >= player_list.get(i).bet) {
 						System.out.println(player_choices[2]);
 						doubledown = true;
 					}
-					if (player_list.get(i).hand.size() > 1 && !splitskip && player_list.get(i).hand.get(0).name.substring(0, 3).equals(player_list.get(i).hand.get(1).name.substring(0, 3)) && player_list.get(i).getBalance() >= player_list.get(i).getBet()) {
+					if (player_list.get(i).hand.size() > 1 && player_list.get(i).hand.get(0).name.substring(0, 3).equals(player_list.get(i).hand.get(1).name.substring(0, 3)) && player_list.get(i).getBalance() >= player_list.get(i).getBet()) {
 						System.out.println(player_choices[3]);
 						//the idea is to create a new player instance with the same name, balance and bet on split
 						//insert the new player object at the index of the first player objects name +1 to get the "hands" in correct order
 						//remove the split card from first player object hand and add to "second" player objects hand
 						//IT ACTUALLY WORKS NOW, LEAVING THIS COMMENT IN CASE SOMEONE WANTS A QUICK OVERVIEW
 						split = true;
-						player_list.get(i).setHandValue();
 					}
 					
 					String choice = scanner.nextLine().toLowerCase();
@@ -205,7 +194,8 @@ public class Main {
 				
 				System.out.println("[Play] again\n"
 						+ "[Return] to menu");
-				String continueplaying = scanner.nextLine().toLowerCase();
+				//String continueplaying = scanner.nextLine().toLowerCase();
+				String continueplaying = "play";
 				Deck.clear_deck();
 				Deck.create_deck();
 				Deck.add_decks(Deck.deckCount);

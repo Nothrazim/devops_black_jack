@@ -71,9 +71,6 @@ public class Player {
 		sql.updateBalance("bet", this.name, this.password, this.getBet());
 		this.drawcard();
 		this.setHandValue();
-		System.out.println(this.getName() +
-				", your" + Player.numberIntToString[extraHandCounter] + 
-				" hand contains:");
 		this.printHand();
 		System.out.println("Total value of hand: "+this.getHand_Value());
 		if(this.getHand_Value() > 21)
@@ -157,6 +154,9 @@ public class Player {
 	}
 
 	public void printHand() {
+		System.out.println(this.getName() +
+				", your" + Player.numberIntToString[extraHandCounter] + 
+				" hand contains:");
 		for (Card card: this.hand) {
 			System.out.println("	"+card.name);
 			}
