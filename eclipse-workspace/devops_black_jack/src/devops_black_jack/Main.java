@@ -31,7 +31,6 @@ public class Main {
 	
 	private void bigMenu(Scanner scanner, Main game, Deck Deck, ArrayList<Player> player_list, Dealer theDealer, SQL sql) {
 		boolean menuing = true;
-		System.out.println(sql.getBalance("daniel", "123"));
 		while(menuing) {
 			boolean canremove = (player_list.size()>1);
 			System.out.println("What would you like to do?");
@@ -100,6 +99,7 @@ public class Main {
 			while(game_running) {
 			
 			for (Player player: player_list) {
+				System.out.println(player.name +" your balance is: " + player.getBalance());
 				System.out.println(player.getName() + ", what will you bet?");
 				while(true) {
 					String str_player_bet=scanner.nextLine();
@@ -169,7 +169,6 @@ public class Main {
 					String choice = scanner.nextLine().toLowerCase();
 					if(choice.equals("stand") || choice.equals("hit") || (choice.equals("double") && doubledown) || (choice.equals("split") && split)) {
 						playing = player_list.get(i).chooseAction(choice, player_list);
-						System.out.println(player_list.toString());
 					}
 					else {
 						System.out.println("\nPlease enter a valid action");
