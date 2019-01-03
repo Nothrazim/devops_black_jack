@@ -153,7 +153,7 @@ public class Main {
 					split = false;
 					System.out.println(player_list.get(i).getName() +
 							", your" + Player.numberIntToString[player_list.get(i).extraHandCounter] + 
-							" hand contains:");
+							" contains:");
 					player_list.get(i).printHand();
 					player_list.get(i).setHandValue();
 					System.out.println("Total value of hand: "+player_list.get(i).getHand_Value());
@@ -169,6 +169,7 @@ public class Main {
 						//remove the split card from first player object hand and add to "second" player objects hand
 						//IT ACTUALLY WORKS NOW, LEAVING THIS COMMENT IN CASE SOMEONE WANTS A QUICK OVERVIEW
 						split = true;
+						player_list.get(i).setHandValue();
 					}
 					
 					String choice = scanner.nextLine().toLowerCase();
@@ -201,12 +202,14 @@ public class Main {
 			
 			boolean endmenu = true;
 			while(endmenu) {
+				
 				System.out.println("[Play] again\n"
 						+ "[Return] to menu");
 				String continueplaying = scanner.nextLine().toLowerCase();
 				Deck.clear_deck();
 				Deck.create_deck();
 				Deck.add_decks(Deck.deckCount);
+				Deck.shuffle_deck();
 				switch (continueplaying) {
 				case "play":
 					endmenu = false;
