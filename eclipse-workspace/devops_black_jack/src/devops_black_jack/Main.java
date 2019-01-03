@@ -34,7 +34,10 @@ public class Main {
 		while(menuing) {
 			boolean canremove = (player_list.size()>1);
 			System.out.println("What would you like to do?");
-			System.out.println("[Add] player\n[Play] blackjack\n[Change] deck\n[Rules]");
+			System.out.println("[Add] player\n"
+					+ "[Play] blackjack\n"
+					+ "[Change] deck\n"
+					+ "[Rules]");
 			if(canremove) {
 				System.out.println("[Remove] player");
 			}
@@ -46,7 +49,7 @@ public class Main {
 				menuing = false;
 				break;
 			case "play":
-				game.gameloop(scanner, player_list, theDealer);
+				game.gameloop(Deck, scanner, player_list, theDealer);
 				menuing = false;
 				break;
 			case "change":
@@ -92,8 +95,7 @@ public class Main {
 		Deck.shuffle_deck();
 			
 	}
-	private void gameloop(Scanner scanner, ArrayList<Player> player_list, Dealer theDealer) {
-		//place bets
+	private void gameloop(Deck Deck, Scanner scanner, ArrayList<Player> player_list, Dealer theDealer) {
 		String[] player_choices = {"Hit", "Stand", "Double", "Split"};
 		boolean game_running = true;
 			while(game_running) {
@@ -146,9 +148,12 @@ public class Main {
 				boolean doubledown = false;
 				split = false;
 				boolean splitskip = false;
+				//player_list.get(i).extraHandCounter +
 				while(playing) {
 					split = false;
-					System.out.println(player_list.get(i).getName() + ", your hand contains:");
+					System.out.println(player_list.get(i).getName() +
+							", your" + Player.numberIntToString[player_list.get(i).extraHandCounter] + 
+							" hand contains:");
 					player_list.get(i).printHand();
 					player_list.get(i).setHandValue();
 					System.out.println("Total value of hand: "+player_list.get(i).getHand_Value());
@@ -180,11 +185,10 @@ public class Main {
 			for(Player player : player_list) {
 				player.setHandValue();
 				if(player.getHand_Value() <= 21) {
-					theDealer.draw_more();
+					theDealer.draw_more(); //dealer draws remaining cards until threshold of 17
 					break;
 				}
 			}
-			//dealer draws remaining cards until threshold of 17
 			
 			//Loop through player list and compare vs dealer_hand
 			theDealer.deduce_winner(player_list);
@@ -197,8 +201,12 @@ public class Main {
 			
 			boolean endmenu = true;
 			while(endmenu) {
-				System.out.println("[Play] again\n[Return] to menu");
+				System.out.println("[Play] again\n"
+						+ "[Return] to menu");
 				String continueplaying = scanner.nextLine().toLowerCase();
+				Deck.clear_deck();
+				Deck.create_deck();
+				Deck.add_decks(Deck.deckCount);
 				switch (continueplaying) {
 				case "play":
 					endmenu = false;

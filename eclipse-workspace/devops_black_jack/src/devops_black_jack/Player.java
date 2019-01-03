@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Player {
 	
+	int extraHandCounter;
 	int hand_value;
 	double balance;
 	double bet;
@@ -12,6 +13,7 @@ public class Player {
 	Deck Deck;
 	SQL sql;
 	boolean extraHand = false;
+	final static String [] numberIntToString = {"", " second", " third", " fourth", " fifth", " sixth", " seventh", " eight"};
 	
 	ArrayList<Card> hand = new ArrayList<Card>();
 	
@@ -78,7 +80,6 @@ public class Player {
 
 	boolean Split(ArrayList<Player> player_list) {
 		System.out.println("\nSplit!");
-		//test
 		int indexcount = 0;
 		for(Player player:player_list) {
 			if(player.getName().equals(this.getName()))
@@ -99,10 +100,10 @@ public class Player {
 				player_list.get(i+indexcount).hand.add(this.hand.get(this.hand.size()-1));
 				this.hand.remove(this.hand.size()-1);
 				player_list.get(i+indexcount).setExtraHand(true);
+				player_list.get(i+indexcount).extraHandCounter = indexcount;
 				return true;
 			}
 		}
-		//test
 		return false;
 	}	
 	

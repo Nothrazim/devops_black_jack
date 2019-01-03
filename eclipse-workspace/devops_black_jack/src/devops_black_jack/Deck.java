@@ -9,6 +9,7 @@ public class Deck {
 	
 	static ArrayList<Card> deck = new ArrayList<Card>();
 	
+	int deckCount = 1;
 	
 	void create_deck(){
 		for(int suit = 0; suit < suites.length; suit++) {
@@ -41,11 +42,11 @@ public class Deck {
 		deck.addAll(temp_deck);
 		System.out.println(value + " decks will be used");
 		System.out.println("DECKSIZE " +deck.size());
+		deckCount = value;
 		}
 	
 	void shuffle_deck() {
 		Collections.shuffle(deck);
-		System.out.println("Deck has been shuffled.");
 	}
 	
 	void print_deck(ArrayList<Card> deck) {
