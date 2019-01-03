@@ -13,7 +13,8 @@ public class Player {
 	Deck Deck;
 	SQL sql;
 	boolean extraHand = false;
-	final static String [] numberIntToString = {"", " second", " third", " fourth", " fifth", " sixth", " seventh", " eight"};
+	final static String [] numberIntToString = {" hand", " second hand", " third hand", " fourth hand", " fifth hand", " sixth hand", " seventh hand", " eight hand"};
+	
 	
 	ArrayList<Card> hand = new ArrayList<Card>();
 	
@@ -35,7 +36,7 @@ public class Player {
 			returnvalue = Stand();
 			return returnvalue;
 		case "double":
-			returnvalue = Doubledown();
+			returnvalue = Doubledown(player_list);
 			return returnvalue;
 		case "split":
 			returnvalue = Split(player_list);
@@ -64,13 +65,15 @@ public class Player {
 		return false;
 	}
 	
-	boolean Doubledown() {
+	boolean Doubledown( ArrayList<Player> player_list) {
 		System.out.println("\nDoubling down!");
 		this.setBet(this.getBet()*2);
 		sql.updateBalance("bet", this.name, this.password, this.getBet());
 		this.drawcard();
 		this.setHandValue();
-		System.out.println(this.getName() + ", your hand contains:");
+		System.out.println(this.getName() +
+				", your" + Player.numberIntToString[extraHandCounter] + 
+				" hand contains:");
 		this.printHand();
 		System.out.println("Total value of hand: "+this.getHand_Value());
 		if(this.getHand_Value() > 21)
