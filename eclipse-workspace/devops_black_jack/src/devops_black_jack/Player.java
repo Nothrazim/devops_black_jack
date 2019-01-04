@@ -13,7 +13,7 @@ public class Player {
 	private Deck Deck;
 	private SQL sql;
 	private boolean extraHand = false;
-	final static String [] numberIntToString = {" hand", " second hand", " third hand", " fourth hand", " fifth hand", " sixth hand", " seventh hand", " eight hand"};
+	final static String [] numberIntToString = {"'s hand", " second hand", " third hand", " fourth hand", " fifth hand", " sixth hand", " seventh hand", " eight hand"};
 	
 	
 	private ArrayList<Card> hand = new ArrayList<Card>();
@@ -122,6 +122,13 @@ public class Player {
 		Card card = Deck.draw_card();
 		hand.add(card);
 	}
+	 void initialdraw() {
+		 for(int i = 0; i<2; i++) {
+		 Card card = Deck.draw_card();
+		 hand.add(card);
+		 }
+		 this.setHandValue();
+	 }
 	
 	public void updateBalance(double difference) {
 		sql.updateBalance("win", this.name, this.password, difference);
