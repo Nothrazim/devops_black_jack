@@ -174,6 +174,11 @@ public class Player {
 			if(this.getHand_Value() == 1)
 				this.hand.get(0).setAceToValueEleven();
 		}
+		
+		this.hand_value = 0;
+		for (Card card: this.hand) {
+			this.hand_value += card.getValue();
+			}
 	}
 
 	public void printHand() {
