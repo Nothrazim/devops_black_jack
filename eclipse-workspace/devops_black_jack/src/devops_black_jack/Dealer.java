@@ -85,7 +85,7 @@ public class Dealer {
 					player.updateBalance(player.getBet()*2);
 					}
 				else if (pval > dval && pval <= 21) {
-					System.out.println("player is higher than dealer, " + player.getName()+" "
+					System.out.println("player is higher than dealer, " + player.getName()+""
 				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
 					player.updateBalance(player.getBet()*2);
 					}
@@ -93,7 +93,7 @@ public class Dealer {
 					System.out.println("dealer is higher than player, dealer wins.");
 					}
 				else {
-					System.out.println("Dealer Wins!");
+					System.out.println("Player busts, dealer wins.");
 				}
 				}
 			player.setBet(0);

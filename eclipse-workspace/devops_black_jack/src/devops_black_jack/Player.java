@@ -13,7 +13,7 @@ public class Player {
 	private Deck Deck;
 	private SQL sql;
 	private boolean extraHand = false;
-	final static String [] numberIntToString = {" hand", " second hand", " third hand", " fourth hand", " fifth hand", " sixth hand", " seventh hand", " eight hand"};
+	final static String [] numberIntToString = {"'s hand", " second hand", " third hand", " fourth hand", " fifth hand", " sixth hand", " seventh hand", " eight hand"};
 	
 	
 	private ArrayList<Card> hand = new ArrayList<Card>();

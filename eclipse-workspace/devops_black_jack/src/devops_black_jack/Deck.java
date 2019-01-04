@@ -40,8 +40,7 @@ public class Deck {
 			temp_deck.addAll(deck);
 			}
 		deck.addAll(temp_deck);
-		System.out.println(value + " decks will be used");
-		System.out.println("DECKSIZE " +deck.size());
+		//System.out.println(value + " decks will be used, a total of "+deck.size()+" cards");
 		setDeckCount(value);
 		}
 	
