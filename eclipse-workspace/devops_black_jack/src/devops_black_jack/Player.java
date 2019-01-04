@@ -30,7 +30,7 @@ public class Player {
 		boolean returnvalue;
 		switch (choice) {
 		case "hit":
-			returnvalue = Hit(true);
+			returnvalue = Hit();
 			return returnvalue;
 		case "stand":
 			returnvalue = Stand();
@@ -46,29 +46,19 @@ public class Player {
 		}
 	}
 	
-	boolean Hit(boolean hit) {
-		if(hit) {
-			System.out.println("\nHit!");
-			this.drawcard();
-			this.setHandValue();
-			if(this.getHand_Value()>21) {
-				System.out.println(this.getName() + ", your hand contains:");
-				this.printHand();
-				System.out.println("Total value of hand: "+this.getHand_Value());
-				System.out.println("Bust!\n");
-				return false;
-			}
-			else if(this.getHand_Value()==21) {
-				System.out.println(this.getName()+" hit a blackjack!");
-				return false;
-			}
-		}
-		else {
-			this.drawcard();
-			if(this.getHand_Value()==21) {
-				System.out.println(this.getName()+" hit a blackjack!");
-				return false;
-			}
+	boolean Hit() {
+		System.out.println("\nHit!");
+		this.drawcard();
+		this.setHandValue();
+		if(this.getHand_Value()>21) {
+			System.out.println(this.getName() + ", your hand contains:");
+			this.printHand();
+			System.out.println("Total value of hand: "+this.getHand_Value());
+			System.out.println("Bust!\n");
+			return false;
+	}
+		else if(this.getHand_Value()==21) {
+			System.out.println(this.getName()+" hit a blackjack!");
 		}
 		return true;
 	}
@@ -128,7 +118,7 @@ public class Player {
 		return false;
 	}	
 	
-	private void drawcard() {
+	void drawcard() {
 		Card card = Deck.draw_card();
 		hand.add(card);
 	}

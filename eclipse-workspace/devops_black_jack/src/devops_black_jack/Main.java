@@ -130,13 +130,14 @@ public class Main {
 			
 			//Player(s): Initial card draw		
 			for (Player player: player_list) {
-				player.Hit(false);
-				player.Hit(false);
+				player.drawcard();
+				player.drawcard();
 				if (player_list.size() > 1)
 					player.printHand();
 				}
 			
-			
+			//FOR NOW IT JUST PRINTS THE PLAYERS NAME TWICE FOR TWO HANDS
+			//PROPER BALANCE CHECKING NEEDS TO BE DONE TOO, AS IT STANDS THE HANDS HAVE INDIVIDUAL BALANCES, VERY BAD
 			boolean split = false;
 			for (int i = 0; i < player_list.size(); i++) {
 				if(split)
@@ -197,8 +198,7 @@ public class Main {
 				
 				System.out.println("[Play] again\n"
 						+ "[Return] to menu");
-				//String continueplaying = scanner.nextLine().toLowerCase();
-				String continueplaying = "play";
+				String continueplaying = scanner.nextLine().toLowerCase();
 				Deck.clear_deck();
 				Deck.create_deck();
 				Deck.add_decks(Deck.getDeckCount());
