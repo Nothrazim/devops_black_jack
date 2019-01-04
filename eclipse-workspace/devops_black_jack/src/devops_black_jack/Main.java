@@ -297,7 +297,7 @@ public class Main {
 	}
 	
 	private void balanceOptions(ArrayList<Player> player_list, Scanner scanner, SQL sql) {
-		boolean menuing = true, submenuing = true;
+		boolean menuing = true;
 		String playername = null;
 		if(player_list.size() == 1)
 			playername = player_list.get(0).getName();
@@ -316,6 +316,7 @@ public class Main {
 					playername = scanner.nextLine();
 					}
 				System.out.println("How much would you like to add?");
+				boolean submenuing = true;
 				while(submenuing) {
 					String moneystring = scanner.nextLine();
 					try {
@@ -335,6 +336,7 @@ public class Main {
 					if(playername.equals(player.getName())) {
 						sql.updateBalance("win", player.getName(), player.getPassword(), money);
 						System.out.println(money+" has been added to your account");
+						break;
 					}
 				}
 				break;
