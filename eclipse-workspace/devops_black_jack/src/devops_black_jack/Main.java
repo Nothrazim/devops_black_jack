@@ -157,7 +157,7 @@ public class Main {
 						System.out.println(player_choices[2]);
 						doubledown = true;
 					}
-					if (player_list.get(i).getHand().size() > 1 && player_list.get(i).getHand().get(0).getName().substring(0, 3).equals(player_list.get(i).getHand().get(1).getName().substring(0, 3)) && player_list.get(i).getBalance() >= player_list.get(i).getBet()) {
+					if (player_list.get(i).getHand().size() > 1 && player_list.get(i).getHand().get(0).getName().substring(0, 3).equals(player_list.get(i).getHand().get(1).getName().substring(0, 3)) && player_list.get(i).getBalance() >= player_list.get(i).getBet() && player_list.get(i).getHand().size() <= 2) {
 						System.out.println(player_choices[3]);
 						//the idea is to create a new player instance with the same name, balance and bet on split
 						//insert the new player object at the index of the first player objects name +1 to get the "hands" in correct order
