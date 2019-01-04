@@ -361,6 +361,7 @@ public class Main {
 						success = true;
 					}
 						
+					
 				}
 				if(!success)
 					System.out.println("No player by that name is in this game");
