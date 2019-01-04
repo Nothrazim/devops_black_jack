@@ -159,6 +159,7 @@ public class Player {
 				if(card.getValue() == 11) {
 					card.setAceToValueOne();
 					break;
+					
 				}
 			}
 		}
