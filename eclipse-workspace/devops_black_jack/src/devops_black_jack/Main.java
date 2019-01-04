@@ -130,8 +130,7 @@ public class Main {
 			
 			//Player(s): Initial card draw		
 			for (Player player: player_list) {
-				player.drawcard();
-				player.drawcard();
+				player.initialdraw();
 				if (player_list.size() > 1)
 					player.printHand();
 				}

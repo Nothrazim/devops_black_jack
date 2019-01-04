@@ -122,6 +122,13 @@ public class Player {
 		Card card = Deck.draw_card();
 		hand.add(card);
 	}
+	 void initialdraw() {
+		 for(int i = 0; i<2; i++) {
+		 Card card = Deck.draw_card();
+		 hand.add(card);
+		 }
+		 this.setHandValue();
+	 }
 	
 	public void updateBalance(double difference) {
 		sql.updateBalance("win", this.name, this.password, difference);
