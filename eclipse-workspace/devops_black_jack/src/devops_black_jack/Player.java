@@ -1,6 +1,7 @@
 
 package devops_black_jack;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Player {
 	
@@ -57,6 +58,7 @@ public class Player {
 			System.out.println("Bust!\n");
 			return false;
 	}
+		
 		else if(this.getHand_Value()==21) {
 			System.out.println(this.getName()+" hit a blackjack!");
 		}
@@ -84,6 +86,12 @@ public class Player {
 		this.setHandValue();
 		this.printHand();
 		System.out.println("Total value of hand: "+this.getHand_Value());
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
 		if(this.getHand_Value() > 21)
 			System.out.println("Bust!\n");
 		return false;
@@ -184,7 +192,7 @@ public class Player {
 	public void printHand() {
 		System.out.println(this.getName() +
 				", your" + Player.numberIntToString[extraHandCounter] + 
-				" hand contains:");
+				" contains:");
 		for (Card card: this.hand) {
 			System.out.println("	"+card.getName());
 			}

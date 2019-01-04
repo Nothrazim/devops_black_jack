@@ -1,6 +1,7 @@
 package devops_black_jack;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 	
@@ -150,6 +151,12 @@ public class Main {
 				while(playing) {
 					split = false;
 					player_list.get(i).printHand();
+					try {
+						TimeUnit.SECONDS.sleep((long) 2.5);
+					} catch (InterruptedException e) {
+						
+						e.printStackTrace();
+					}
 					player_list.get(i).setHandValue();
 					System.out.println("Total value of hand: "+player_list.get(i).getHand_Value());
 					if (player_list.get(i).getHand_Value() == 21) {

@@ -1,5 +1,6 @@
 package devops_black_jack;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Dealer {
 	private int hand_value = 0;
@@ -23,6 +24,12 @@ public class Dealer {
 		System.out.println("House first card: " + dealer_card.getName());
 		hand_value += dealer_card.getValue();
 		System.out.println("House first value: " + hand_value + "\n");	
+		try {
+			TimeUnit.SECONDS.sleep((long) 1.5);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
 	}
 	
 	void draw_more() {
@@ -51,8 +58,20 @@ public class Dealer {
 				}
 					
 				System.out.println("House value is: " + hand_value);
+				try {
+					TimeUnit.SECONDS.sleep((long) 1.5);
+				} catch (InterruptedException e) {
+					
+					e.printStackTrace();
+				}
 				}
 			}
+		try {
+			TimeUnit.SECONDS.sleep((long) 2.5);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
 		System.out.println("Dealers final hand:");
 		for (Card object: hand) {
 		    System.out.println(object.getName());
@@ -75,18 +94,18 @@ public class Dealer {
 				}
 			else if (pval == 21) { //player blackjacks
 				System.out.println("player blackjacks, "
-			+ player.getName()+"'s"+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
+			+ player.getName()+"'s"+ Player.numberIntToString[player.getExtraHandCounter()] + " wins " + (player.getBet()*2.5));
 				player.updateBalance(player.getBet()*2.5);
 				}
 			else { 
 				if (dval > 21 && pval <= 21) { //dealer busts
 					System.out.println("dealer busts, " + player.getName()+"'s"
-				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
+				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins " + (player.getBet()*2));
 					player.updateBalance(player.getBet()*2);
 					}
 				else if (pval > dval && pval <= 21) {
 					System.out.println("player is higher than dealer, " + player.getName()+"'s"
-				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
+				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins " + (player.getBet()*2));
 					player.updateBalance(player.getBet()*2);
 					}
 				else if(dval > pval && dval <= 21){
