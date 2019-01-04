@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Main {
 	
+	
+	
 	public static void main(String[] args) {
 		System.out.println("Welcome to the scuffed casino");
 		Scanner scanner=new Scanner(System.in);
@@ -37,7 +39,8 @@ public class Main {
 			System.out.println("[Add] player\n"
 					+ "[Play] blackjack\n"
 					+ "[Change] deck\n"
-					+ "[Rules]");
+					+ "[Rules]\n"
+					+ "[Balance]");
 			if(canremove) {
 				System.out.println("[Remove] player");
 			}
@@ -67,6 +70,9 @@ public class Main {
 				break;
 			case "quit":
 				System.exit(0);
+			case "balance":
+				game.balanceOptions(player_list, scanner, sql);
+				break;
 			default:
 				System.out.println("Please enter a valid option");
 				continue;
@@ -291,5 +297,79 @@ public class Main {
 			System.out.println(removeplayer+" has been removed from the game");
 		else
 			System.out.println("No player by the name of "+removeplayer+" is playing in this game");
+	}
+	
+	private void balanceOptions(ArrayList<Player> player_list, Scanner scanner, SQL sql) {
+		boolean menuing = true, submenuing = true;
+		String playername = null;
+		if(player_list.size() == 1)
+			playername = player_list.get(0).getName();
+		while(menuing) {
+			double money = 0;
+			System.out.println("What would you like to do?\n"
+					+ "[Check] balance\n"
+					+ "[Add] funds\n"
+					+ "[List] of players\n"
+					+ "[Back]");
+			String option = scanner.nextLine().toLowerCase();
+			switch (option) {
+			case "add":
+				if(player_list.size() != 1) {
+					System.out.println("Who would you like to add funds to?\n>>");
+					playername = scanner.nextLine();
+					}
+				System.out.println("How much would you like to add?");
+				while(submenuing) {
+					String moneystring = scanner.nextLine();
+					try {
+						money = Double.parseDouble(moneystring);
+						if(money < 0) {
+							System.out.println("Please enter a number greater than zero");
+							continue;
+						}
+						submenuing = false;
+					}
+					catch(Exception e) {
+						System.out.println("Please enter a number");
+						continue;
+					}
+				}
+				for(Player player : player_list) {
+					if(playername.equals(player.getName())) {
+						sql.updateBalance("win", player.getName(), player.getPassword(), money);
+						System.out.println(money+" has been added to your account");
+					}
+				}
+				break;
+			case "back":
+				menuing = false;
+				break;
+			case "list":
+				System.out.println("------- PLAYERS -------");
+				for(Player player : player_list) {
+					System.out.println(player.getName());
+				}
+				break;
+			case "check":
+				if(player_list.size() !=1) {
+					System.out.println("Which players balance would you like to check?");
+					playername = scanner.nextLine();
+				}
+				boolean success = false;
+				for(Player player : player_list) {
+					if(player.getName().equals(playername)) {
+						System.out.println(player.getName()+" your balance is "+player.getBalance());
+						success = true;
+					}
+						
+				}
+				if(!success)
+					System.out.println("No player by that name is in this game");
+				break;
+			default:
+				System.out.println("Please enter a valid option");
+				break;
+			}
+		}
 	}
 }

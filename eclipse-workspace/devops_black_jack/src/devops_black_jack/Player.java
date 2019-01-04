@@ -167,7 +167,7 @@ public class Player {
 		return name;
 	}
 	
-	private String getPassword() {
+	public String getPassword() {
 		return this.password;
 	}
 	
@@ -182,6 +182,7 @@ public class Player {
 	public boolean isExtraHand() {
 		return extraHand;
 	}
+	
 
 	public void setExtraHand(boolean extraHand) {
 		this.extraHand = extraHand;
