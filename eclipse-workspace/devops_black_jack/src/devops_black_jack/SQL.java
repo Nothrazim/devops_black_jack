@@ -34,27 +34,26 @@ public class SQL {
 		if (this.Login(username, password))  // Try logging in before creating new user
 			return true;
 		else {
-		try {
-			PreparedStatement s = connect.prepareStatement("insert into account values(default, ?, ?, ?)");
-			s.setString(1, username);
-			s.setString(2, password);
-			s.setDouble(3, balance);
-			s.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}}
+			try {
+				PreparedStatement s = connect.prepareStatement("insert into account values(default, ?, ?, ?)");
+				s.setString(1, username);
+				s.setString(2, password);
+				s.setDouble(3, balance);
+				s.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}}
 		return true;
 	}
 	//RETURNS TRUE IF SUCCESSFUL, FALSE IF NOT
 	public boolean Login(String username, String password){
-		try {
-			Statement s = connect.createStatement();
+		try (Statement s = connect.createStatement()) {
 			ResultSet rs = s.executeQuery("select * from account where username ='"+username+"' and password='"+password+"'");
-		if(rs.next())
-			return true;
-		else
-			return false;
+			if(rs.next())
+				return true;
+			else
+				return false;
 		}
 		 catch (SQLException e) {
 			e.printStackTrace();
@@ -65,9 +64,8 @@ public class SQL {
 	public double getBalance(String username, String password) {
 		ResultSet balance = null;
 		double intbalance = -1;
-		try {
-			Statement s = connect.createStatement();
-			balance = s.executeQuery("select balance from account where username ='"+username+"' and password='"+password+"'");
+		try (Statement s = connect.createStatement())
+			{ balance = s.executeQuery("select balance from account where username ='"+username+"' and password='"+password+"'");
 			if (balance.next())
 				intbalance = balance.getDouble("Balance");
 		}
@@ -78,9 +76,10 @@ public class SQL {
 	}
 	
 	public boolean setBalance(String username, double balance) {
-		try {
-			BigDecimal decimalbalance = BigDecimal.valueOf(balance);
-			PreparedStatement s = connect.prepareStatement("update account set balance='"+decimalbalance+"' where username = '"+username+"'");
+		BigDecimal decimalbalance = BigDecimal.valueOf(balance);
+		try (PreparedStatement s = connect.prepareStatement(
+				"update account set balance='"+decimalbalance+
+				"' where username = '"+username+"'")) {
 			s.executeUpdate();
 			return true;
 		}
@@ -92,12 +91,13 @@ public class SQL {
 	}
 	
 	public boolean updateBalance(String BetOrWin ,String username, String password, double bet) {
-		try {
 			bet = Math.abs(bet);
 			if(BetOrWin.toLowerCase() == "bet")
 				bet = -bet;
 			BigDecimal bdbet = BigDecimal.valueOf(bet);
-			PreparedStatement s = connect.prepareStatement("update account set balance=balance + '"+bdbet+"' where username='"+username+"' and password='"+password+"'");
+		try (PreparedStatement s = connect.prepareStatement(
+				"update account set balance=balance + '"+bdbet+
+				"' where username='"+username+"' and password='"+password+"'")) {
 			s.executeUpdate();
 			return true;
 		}

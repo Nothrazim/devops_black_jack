@@ -68,6 +68,8 @@ public class Main {
 				//print rules
 				break;
 			case "quit":
+				try { sql.connect.close(); }
+				catch (Exception e) { System.err.println("Exiting without closing database connection!");}
 				System.exit(0);
 			case "balance":
 				game.balanceOptions(player_list, scanner, sql);
