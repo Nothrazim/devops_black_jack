@@ -1,8 +1,8 @@
 package devops_black_jack;
 
 public class Card {
-	String name;
-	int value;
+	private String name;
+	private int value;
 	
 	Card(String name, int value){
 		this.name = name;

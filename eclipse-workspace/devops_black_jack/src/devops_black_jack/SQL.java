@@ -10,9 +10,9 @@ import java.sql.Statement;
 
 public class SQL {
 	
-	static String DB_URL = "jdbc:mysql://java.bx.nimell.se:33306/casino";
-	static String mySQLUser = "coffee";
-	static String mySQLPass = "hunter12";
+	final static String DB_URL = "jdbc:mysql://java.bx.nimell.se:33306/casino";
+	final static String mySQLUser = "coffee";
+	final static String mySQLPass = "hunter12";
 	
 	Connection connect;
 	public SQL(){

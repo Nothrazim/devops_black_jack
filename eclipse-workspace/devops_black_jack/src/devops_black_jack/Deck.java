@@ -5,11 +5,11 @@ import java.util.*;
 public class Deck {
 	
 	
-	static String[] suites = {"Hearts", "Spades", "Diamonds", "Clubs"};
+	final static String[] suites = {"Hearts", "Spades", "Diamonds", "Clubs"};
 	
 	static ArrayList<Card> deck = new ArrayList<Card>();
 	
-	int deckCount = 1;
+	private int deckCount = 1;
 	
 	void create_deck(){
 		for(int suit = 0; suit < suites.length; suit++) {
@@ -42,7 +42,7 @@ public class Deck {
 		deck.addAll(temp_deck);
 		System.out.println(value + " decks will be used");
 		System.out.println("DECKSIZE " +deck.size());
-		deckCount = value;
+		setDeckCount(value);
 		}
 	
 	void shuffle_deck() {
@@ -51,7 +51,7 @@ public class Deck {
 	
 	void print_deck(ArrayList<Card> deck) {
 		for (Card object: deck) {
-		    System.out.println(object.name);
+		    System.out.println(object.getName());
 		}
 	}
 	
@@ -64,6 +64,16 @@ public class Deck {
 	
 	public void clear_deck() {
 		deck.clear();
+	}
+
+
+	public int getDeckCount() {
+		return deckCount;
+	}
+
+
+	public void setDeckCount(int deckCount) {
+		this.deckCount = deckCount;
 	}
 	
 }

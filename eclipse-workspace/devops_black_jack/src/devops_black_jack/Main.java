@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Main {
 	
 	
-	
 	public static void main(String[] args) {
 		System.out.println("Welcome to the scuffed casino");
 		Scanner scanner=new Scanner(System.in);
@@ -107,11 +106,10 @@ public class Main {
 			while(game_running) {
 			
 			for (Player player: player_list) {
-				System.out.println(player.name +" your balance is: " + player.getBalance());
+				System.out.println(player.getName() +" your balance is: " + player.getBalance());
 				System.out.println(player.getName() + ", what will you bet?");
 				while(true) {
-					//String str_player_bet=scanner.nextLine();
-					String str_player_bet = "1";
+					String str_player_bet=scanner.nextLine();
 					try {
 						double player_bet = Double.parseDouble(str_player_bet);
 						if(player.getBalance() < player_bet) {
@@ -132,14 +130,13 @@ public class Main {
 			
 			//Player(s): Initial card draw		
 			for (Player player: player_list) {
-				player.drawcard();
-				player.drawcard();
+				player.Hit(false);
+				player.Hit(false);
 				if (player_list.size() > 1)
 					player.printHand();
 				}
 			
-			//FOR NOW IT JUST PRINTS THE PLAYERS NAME TWICE FOR TWO HANDS
-			//PROPER BALANCE CHECKING NEEDS TO BE DONE TOO, AS IT STANDS THE HANDS HAVE INDIVIDUAL BALANCES, VERY BAD
+			
 			boolean split = false;
 			for (int i = 0; i < player_list.size(); i++) {
 				if(split)
@@ -154,11 +151,11 @@ public class Main {
 					player_list.get(i).setHandValue();
 					System.out.println("Total value of hand: "+player_list.get(i).getHand_Value());
 					System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
-					if (player_list.get(i).getBalance() >= player_list.get(i).bet) {
+					if (player_list.get(i).getBalance() >= player_list.get(i).getBet()) {
 						System.out.println(player_choices[2]);
 						doubledown = true;
 					}
-					if (player_list.get(i).hand.size() > 1 && player_list.get(i).hand.get(0).name.substring(0, 3).equals(player_list.get(i).hand.get(1).name.substring(0, 3)) && player_list.get(i).getBalance() >= player_list.get(i).getBet()) {
+					if (player_list.get(i).getHand().size() > 1 && player_list.get(i).getHand().get(0).getName().substring(0, 3).equals(player_list.get(i).getHand().get(1).getName().substring(0, 3)) && player_list.get(i).getBalance() >= player_list.get(i).getBet()) {
 						System.out.println(player_choices[3]);
 						//the idea is to create a new player instance with the same name, balance and bet on split
 						//insert the new player object at the index of the first player objects name +1 to get the "hands" in correct order
@@ -204,7 +201,7 @@ public class Main {
 				String continueplaying = "play";
 				Deck.clear_deck();
 				Deck.create_deck();
-				Deck.add_decks(Deck.deckCount);
+				Deck.add_decks(Deck.getDeckCount());
 				Deck.shuffle_deck();
 				switch (continueplaying) {
 				case "play":

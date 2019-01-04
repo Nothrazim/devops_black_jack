@@ -2,13 +2,11 @@ package devops_black_jack;
 import java.util.ArrayList;
 
 public class Dealer {
-	int hand_value = 0;
-	ArrayList<Card> hand = new ArrayList<Card>();
-	Deck Deck;
-	SQL sql;
+	private int hand_value = 0;
+	private ArrayList<Card> hand = new ArrayList<Card>();
+	private Deck Deck;
 	public Dealer() {
 		Deck = new Deck();
-		sql = new SQL();
 	}
 		
 	void resetHand() {
@@ -23,7 +21,7 @@ public class Dealer {
 		Card dealer_card = Deck.draw_card();
 		hand.add(dealer_card);
 		System.out.println("House first card: " + dealer_card.getName());
-		hand_value += dealer_card.value;
+		hand_value += dealer_card.getValue();
 		System.out.println("House first value: " + hand_value + "\n");	
 	}
 	
@@ -38,7 +36,7 @@ public class Dealer {
 				Card dealer_card = Deck.draw_card();
 				hand.add(dealer_card);
 				System.out.println("House drew: " + dealer_card.getName());
-				hand_value += dealer_card.value;
+				hand_value += dealer_card.getValue();
 				if(this.hand_value > 21) {
 					for(Card card: hand) {
 						if(card.getValue() == 11) {
@@ -57,7 +55,7 @@ public class Dealer {
 			}
 		System.out.println("Dealers final hand:");
 		for (Card object: hand) {
-		    System.out.println(object.name);
+		    System.out.println(object.getName());
 		    }
 		System.out.println("Dealers final value is " + hand_value);
 	
@@ -67,9 +65,9 @@ public class Dealer {
 		for (Player player: player_list) {
 			int pval = player.getHand_Value();
 			int dval = hand_value;
-			System.out.println(player.name+"" + Player.numberIntToString[player.extraHandCounter] + " pval: " + pval + ", dealer val: " + dval);
+			System.out.println(player.getName()+"" + Player.numberIntToString[player.getExtraHandCounter()] + " pval: " + pval + ", dealer val: " + dval);
 			if (hand_value == pval) { //tie, money back
-				System.out.println(player.name+" "+ Player.numberIntToString[player.extraHandCounter] + " gets money back");
+				System.out.println(player.getName()+" "+ Player.numberIntToString[player.getExtraHandCounter()] + " gets money back");
 				player.updateBalance(player.getBet());
 			}
 			else if (dval == 21) { //dealer blackjacks
@@ -77,18 +75,18 @@ public class Dealer {
 				}
 			else if (pval == 21) { //player blackjacks
 				System.out.println("player blackjacks, "
-			+ player.name+""+ Player.numberIntToString[player.extraHandCounter] + " wins");
+			+ player.getName()+""+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
 				player.updateBalance(player.getBet()*2.5);
 				}
 			else { 
 				if (dval > 21 && pval <= 21) { //dealer busts
-					System.out.println("dealer busts, " + player.name+""
-				+ Player.numberIntToString[player.extraHandCounter] + " wins");
+					System.out.println("dealer busts, " + player.getName()+""
+				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
 					player.updateBalance(player.getBet()*2);
 					}
 				else if (pval > dval && pval <= 21) {
-					System.out.println("player is higher than dealer, " + player.name+" "
-				+ Player.numberIntToString[player.extraHandCounter] + " wins");
+					System.out.println("player is higher than dealer, " + player.getName()+" "
+				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
 					player.updateBalance(player.getBet()*2);
 					}
 				else if(dval > pval && dval <= 21){
@@ -98,7 +96,7 @@ public class Dealer {
 					System.out.println("Dealer Wins!");
 				}
 				}
-			player.bet = 0;
+			player.setBet(0);
 			player.resetHand();
 			//for when we use proper logins, updates database balance after every game
 			//sql.setBalance(player.getName(), player.getBalance());

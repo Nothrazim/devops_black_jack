@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 public class Player {
 	
-	int extraHandCounter;
-	int hand_value;
-	double balance;
-	double bet;
-	String name;
-	String password;
-	Deck Deck;
-	SQL sql;
-	boolean extraHand = false;
+	private int extraHandCounter;
+	private int hand_value;
+	private double balance;
+	private double bet;
+	private String name;
+	private String password;
+	private Deck Deck;
+	private SQL sql;
+	private boolean extraHand = false;
 	final static String [] numberIntToString = {" hand", " second hand", " third hand", " fourth hand", " fifth hand", " sixth hand", " seventh hand", " eight hand"};
 	
 	
-	ArrayList<Card> hand = new ArrayList<Card>();
+	private ArrayList<Card> hand = new ArrayList<Card>();
 	
 	public Player(String name, String password, double balance){
 		this.balance = balance;
@@ -30,7 +30,7 @@ public class Player {
 		boolean returnvalue;
 		switch (choice) {
 		case "hit":
-			returnvalue = Hit();
+			returnvalue = Hit(true);
 			return returnvalue;
 		case "stand":
 			returnvalue = Stand();
@@ -46,18 +46,39 @@ public class Player {
 		}
 	}
 	
-	boolean Hit() {
-		System.out.println("\nHit!");
-		this.drawcard();
-		this.setHandValue();
-		if(this.getHand_Value()>21) {
-			System.out.println(this.getName() + ", your hand contains:");
-			this.printHand();
-			System.out.println("Total value of hand: "+this.getHand_Value());
-			System.out.println("Bust!\n");
-			return false;
-	}
+	boolean Hit(boolean hit) {
+		if(hit) {
+			System.out.println("\nHit!");
+			this.drawcard();
+			this.setHandValue();
+			if(this.getHand_Value()>21) {
+				System.out.println(this.getName() + ", your hand contains:");
+				this.printHand();
+				System.out.println("Total value of hand: "+this.getHand_Value());
+				System.out.println("Bust!\n");
+				return false;
+			}
+			else if(this.getHand_Value()==21) {
+				System.out.println(this.getName()+" hit a blackjack!");
+				return false;
+			}
+		}
+		else {
+			this.drawcard();
+			if(this.getHand_Value()==21) {
+				System.out.println(this.getName()+" hit a blackjack!");
+				return false;
+			}
+		}
 		return true;
+	}
+
+	public int getExtraHandCounter() {
+		return extraHandCounter;
+	}
+
+	public void setExtraHandCounter(int extraHandCounter) {
+		this.extraHandCounter = extraHandCounter;
 	}
 
 	boolean Stand() {
@@ -107,7 +128,7 @@ public class Player {
 		return false;
 	}	
 	
-	void drawcard() {
+	private void drawcard() {
 		Card card = Deck.draw_card();
 		hand.add(card);
 	}
@@ -134,7 +155,7 @@ public class Player {
 	public void setHandValue() {
 		this.hand_value = 0;
 		for (Card card: this.hand) {
-			this.hand_value += card.value;
+			this.hand_value += card.getValue();
 			}
 		if(this.hand_value > 21) {
 			for(Card card: this.hand) {
@@ -146,9 +167,9 @@ public class Player {
 		}
 		this.hand_value = 0;
 		for (Card card: this.hand) {
-			this.hand_value += card.value;
+			this.hand_value += card.getValue();
 			if(this.hand.size() == 1) 
-				if(card.value == 1)
+				if(card.getValue() == 1)
 				card.setAceToValueEleven();
 		}
 	}
@@ -158,11 +179,19 @@ public class Player {
 				", your" + Player.numberIntToString[extraHandCounter] + 
 				" hand contains:");
 		for (Card card: this.hand) {
-			System.out.println("	"+card.name);
+			System.out.println("	"+card.getName());
 			}
 		System.out.println("");
 		}	
 	
+	public ArrayList<Card> getHand() {
+		return hand;
+	}
+
+	public void setHand(ArrayList<Card> hand) {
+		this.hand = hand;
+	}
+
 	public String getName() {
 		return name;
 	}
