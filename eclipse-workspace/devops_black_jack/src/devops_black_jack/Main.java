@@ -152,6 +152,9 @@ public class Main {
 					player_list.get(i).printHand();
 					player_list.get(i).setHandValue();
 					System.out.println("Total value of hand: "+player_list.get(i).getHand_Value());
+					if (player_list.get(i).getHand_Value() == 21) {
+						break;
+					}
 					System.out.println("What do you want to do?\n" + player_choices[0] + "\n"+ player_choices[1]);
 					if (player_list.get(i).getBalance() >= player_list.get(i).getBet()) {
 						System.out.println(player_choices[2]);
