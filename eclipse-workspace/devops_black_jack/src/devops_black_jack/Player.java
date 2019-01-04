@@ -13,7 +13,7 @@ public class Player {
 	private Deck Deck;
 	private SQL sql;
 	private boolean extraHand = false;
-	final static String [] numberIntToString = {"'s hand", " second hand", " third hand", " fourth hand", " fifth hand", " sixth hand", " seventh hand", " eight hand"};
+	final static String [] numberIntToString = {" hand", " second hand", " third hand", " fourth hand", " fifth hand", " sixth hand", " seventh hand", " eight hand"};
 	
 	
 	private ArrayList<Card> hand = new ArrayList<Card>();
@@ -51,7 +51,7 @@ public class Player {
 		this.drawcard();
 		this.setHandValue();
 		if(this.getHand_Value()>21) {
-			System.out.println(this.getName() + ", your hand contains:");
+			//System.out.println(this.getName() + ", your hand contains:");
 			this.printHand();
 			System.out.println("Total value of hand: "+this.getHand_Value());
 			System.out.println("Bust!\n");

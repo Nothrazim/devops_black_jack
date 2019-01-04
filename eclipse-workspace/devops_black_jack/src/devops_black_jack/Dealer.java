@@ -65,9 +65,9 @@ public class Dealer {
 		for (Player player: player_list) {
 			int pval = player.getHand_Value();
 			int dval = hand_value;
-			System.out.println(player.getName()+"" + Player.numberIntToString[player.getExtraHandCounter()] + " pval: " + pval + ", dealer val: " + dval);
+			System.out.println(player.getName()+"'s"+ Player.numberIntToString[player.getExtraHandCounter()] + " pval: " + pval + ", dealer val: " + dval);
 			if (hand_value == pval) { //tie, money back
-				System.out.println(player.getName()+" "+ Player.numberIntToString[player.getExtraHandCounter()] + " gets money back");
+				System.out.println(player.getName()+"'s"+ Player.numberIntToString[player.getExtraHandCounter()] + " gets money back");
 				player.updateBalance(player.getBet());
 			}
 			else if (dval == 21) { //dealer blackjacks
@@ -75,17 +75,17 @@ public class Dealer {
 				}
 			else if (pval == 21) { //player blackjacks
 				System.out.println("player blackjacks, "
-			+ player.getName()+""+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
+			+ player.getName()+"'s"+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
 				player.updateBalance(player.getBet()*2.5);
 				}
 			else { 
 				if (dval > 21 && pval <= 21) { //dealer busts
-					System.out.println("dealer busts, " + player.getName()+""
+					System.out.println("dealer busts, " + player.getName()+"'s"
 				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
 					player.updateBalance(player.getBet()*2);
 					}
 				else if (pval > dval && pval <= 21) {
-					System.out.println("player is higher than dealer, " + player.getName()+""
+					System.out.println("player is higher than dealer, " + player.getName()+"'s"
 				+ Player.numberIntToString[player.getExtraHandCounter()] + " wins");
 					player.updateBalance(player.getBet()*2);
 					}
