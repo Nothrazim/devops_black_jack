@@ -11,7 +11,7 @@ public class Main {
 		SQL sql = new SQL();
 		
 		Main game = new Main();
-		String [] logininfo = game.LoginOrRegister(scanner, sql);
+		String [] logininfo = game.LoginOrRegister(scanner, sql, false);
 		
 		ArrayList<Player> player_list = new ArrayList<Player>();
 		Player player = new Player(logininfo[0],logininfo[1], sql.getBalance(logininfo[0], logininfo[1]));
@@ -226,11 +226,17 @@ public class Main {
 	
 	
 	
-	private String [] LoginOrRegister(Scanner scanner, SQL sql) {
+	private String [] LoginOrRegister(Scanner scanner, SQL sql, boolean addplayer) {
 		while(true) {
-			System.out.println("Do you want to login or register?");
+			System.out.println("Do you want to \n[Login]\n[Register]");
+			if(addplayer)
+				System.out.println("[Back]");
 			String logreg = scanner.nextLine().toLowerCase();
-			if(logreg.equals("login") || logreg.equals("register")) {
+			if(logreg.equals("login") || logreg.equals("register") || (logreg.equals("back") && addplayer)) {
+				if(logreg.equals("back")) {
+					String [] what = {"0"};
+					return what;
+				}
 				System.out.print("Enter Username\n>> ");
 				String username = scanner.nextLine();
 				System.out.print("Enter Password\n>> ");
@@ -266,10 +272,13 @@ public class Main {
 	
 	
 	private void addPlayer(ArrayList<Player> player_list, Scanner scanner, SQL sql) {
-		String [] addedplayer = this.LoginOrRegister(scanner, sql);
+		String [] addedplayer = this.LoginOrRegister(scanner, sql, true);
+		if(addedplayer.length != 1) {	
 		Player player = new Player(addedplayer[0], addedplayer[1], sql.getBalance(addedplayer[0], addedplayer[1]));
 		player_list.add(player);
 		System.out.println("Player "+addedplayer[0]+ " has been added to the game");
+		}
+		
 	}
 	
 	private void removePlayer(ArrayList<Player> player_list, Scanner scanner) {
