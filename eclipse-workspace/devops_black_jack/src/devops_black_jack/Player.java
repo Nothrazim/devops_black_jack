@@ -169,6 +169,10 @@ public class Player {
 				if(card.getValue() == 1)
 				card.setAceToValueEleven();
 		}
+		if(this.hand.size() == 1) {
+			if(this.getHand_Value() == 1)
+				this.hand.get(0).setAceToValueEleven();
+		}
 	}
 
 	public void printHand() {
