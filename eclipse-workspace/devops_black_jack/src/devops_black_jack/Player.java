@@ -78,8 +78,8 @@ public class Player {
 	
 	boolean Doubledown( ArrayList<Player> player_list) {
 		System.out.println("\nDoubling down!");
-		this.setBet(this.getBet()*2);
 		sql.updateBalance("bet", this.name, this.password, this.getBet());
+		this.setBet(this.getBet()*2);
 		this.drawcard();
 		this.setHandValue();
 		this.printHand();
@@ -108,6 +108,7 @@ public class Player {
 		for(int i = 0; i < player_list.size(); i++) {
 			if(player_list.get(i).getName().equals(this.getName())) {
 				player_list.get(i+indexcount).setBet(this.getBet());
+				player_list.get(i+indexcount).updateBalance("bet", this.getBet());
 				player_list.get(i+indexcount).hand.add(this.hand.get(this.hand.size()-1));
 				this.hand.remove(this.hand.size()-1);
 				player_list.get(i+indexcount).setExtraHand(true);
@@ -130,8 +131,8 @@ public class Player {
 		 this.setHandValue();
 	 }
 	
-	public void updateBalance(double difference) {
-		sql.updateBalance("win", this.name, this.password, difference);
+	public void updateBalance(String BetorWin ,double difference) {
+		sql.updateBalance(BetorWin, this.name, this.password, difference);
 		balance = balance+difference;
 	}
 
@@ -141,7 +142,6 @@ public class Player {
 	}
 	
 	public void setBet(double bet) {
-		sql.updateBalance("bet", this.name, this.password, bet);
 		this.bet = bet;	
 	}
 	
