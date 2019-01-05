@@ -119,6 +119,7 @@ public class Main {
 							continue;
 						}
 						player.setBet(player_bet);
+						player.updateBalance("bet",player_bet);
 						break;
 					}
 					catch(Exception e) {
