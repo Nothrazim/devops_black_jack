@@ -108,6 +108,7 @@ public class Player {
 		for(int i = 0; i < player_list.size(); i++) {
 			if(player_list.get(i).getName().equals(this.getName())) {
 				player_list.get(i+indexcount).setBet(this.getBet());
+				player_list.get(i+indexcount).updateBalance("bet", this.getBet());
 				player_list.get(i+indexcount).hand.add(this.hand.get(this.hand.size()-1));
 				this.hand.remove(this.hand.size()-1);
 				player_list.get(i+indexcount).setExtraHand(true);
