@@ -51,8 +51,18 @@ public class Tests {
 		SQL sql = new SQL();
 		String user = "testUser";
 		String pass = "testPass";
-		sql.setBalance("testUser", 1000f);
+		sql.setBalance(user, 1000d);
 		double balance = sql.getBalance(user, pass);
 		assertEquals("Testing Database write", 1000, (int)balance);
+	}
+	
+	@Test
+	public void testHit() {
+		d.create_deck();
+		d.shuffle_deck();
+		Player p = new Player("testUser", null, 1000);
+		p.Hit();
+		p.Hit();
+		assertTrue(p.getHand_Value() > 2); // Lowest value possible after two hits. 
 	}
 }
